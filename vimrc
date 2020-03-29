@@ -27,13 +27,23 @@ let mapleader = "-"
 let maplocalleader = "\\"
 
 "setting {{{
+
+"	tab
+"		how many spaces is a tab?
 set tabstop=4
-set softtabstop=0 noexpandtab
+"		how many spaces is an indented block
 set shiftwidth=4
+"		how many spaces to modify on insert mode for <Tab> & <BS>
+set softtabstop=4 
+"		convert tab to spaces? NO ! ! !
+set noexpandtab
+"	use :retab to convert tabs to spaces and :retab! to convert spaces to tabs. target specific lines if desired
 
 set number
-set showmatch       "highlight matching (curly) brackets, parenthesis, ...
-set hlsearch        "highlight search
+"highlight matching (curly) brackets, parenthesis, ...
+set showmatch
+"highlight search
+set hlsearch
 
 set is "incsearch
 "press :noh to remove already highlighted text
@@ -50,9 +60,9 @@ set wildmenu
 "show status linje
 "	spaces need to be escaped
 set laststatus=2 
-set statusline=[%{mode()}]%02n:\ %<%F\ %h%m%r
-set statusline+=%=%-20.(FileType:\ %y\ \ \ \ \ Pos\ :\ %4l/%-4L\ \|%3(%c%)%-4(%V%)%)
-set statusline+=\ \ \ \ %P
+set statusline=%02n:%f\ %h%m%r
+set statusline+=%=%y\ %4l/%-4L\ \|%3(%c%)%-4(%V%)
+set statusline+=\ %P
 
 set pastetoggle=<F11>
 "}}}
@@ -83,8 +93,11 @@ vnoremap <C-b><C-V> "cP
 nnoremap <C-b><C-V> "cP
 inoremap <C-b><C-V> <Esc>"cPa
 
-"paste from external source
-noremap <F10> :set paste?<CR>
+"Function Keys
+"	paste mode enabled?
+nnoremap <F10> :set paste?<CR>
+"	toggle list
+nnoremap <F5> :set list!<CR>:set list?<CR>
 
 "wrap text objects
 vnoremap ' <ESC><ESC>`>a'<ESC>`<i'<ESC>`>ll
@@ -116,6 +129,7 @@ iabbrev improt import
 iabbrev @@ -- <CR>Filippos Christou<CR>filchristou@outlook.com
 cabbrev v visual
 cabbrev m messages
+cabbrev ct checktime
 "}}}
 
 "autocmd {{{
@@ -126,12 +140,21 @@ augroup commentgroup
 	autocmd FileType vim nnoremap <buffer> <localleader>c maI"<ESC>`a
 augroup END
 
-" Vimscript file settings {{{
+augroup pythonprogramming
+	autocmd!
+	autocmd Filetype python setlocal expandtab
+augroup END
+
+" Vimscript file settings
 augroup filetype_vim
 	autocmd!
 	autocmd FileType vim setlocal foldmethod=marker
 augroup END
-"	}}}
+
+augroup onResisedVimWindow
+	autocmd!
+	autocmd VimResized * execute "normal! \<C-W>="
+augroup END
 
 "}}}
 
