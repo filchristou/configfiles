@@ -12,6 +12,8 @@
 "cc --> clear line and go insert mode on indent
 "to search a word : /\<word\>
 "In insert mode press Control-r {reg} to paste something from the register directly
+"To copy something from vim to external program, enter the text to @+ register: the clipboard
+"In insert mode use Control-n or Control-p to autocomplete based on the current buffer
 
 "to indent html:
 " :filetype indent on
@@ -80,18 +82,40 @@ nnoremap <C-J> <C-W>-
 nnoremap <C-K> <C-W>+
 nnoremap <C-L> <C-W>>
 
-"control-c control-v functionality. Use register 'c'
+"control-c control-v functionality. Use X11 CLIPBOARD
 "copy in all modes
-nnoremap <C-c> ma0v$h"cy`a
-vnoremap <C-c> "cy
-inoremap <C-c> "cy
+nnoremap <C-c> ma0v$h"+y`a
+vnoremap <C-c> "+y
+inoremap <C-c> "+y
+"cut in all modes
+nnoremap <C-x> ma0v$h"+x`a
+vnoremap <C-x> "+x
+inoremap <C-x> "+x
 "paste in all modes
-vnoremap <C-v> "cp
-nnoremap <C-v> "cp
-inoremap <C-v> <Esc>"cpa
-vnoremap <C-b><C-V> "cP
-nnoremap <C-b><C-V> "cP
-inoremap <C-b><C-V> <Esc>"cPa
+vnoremap <C-v> "+p
+nnoremap <C-v> "+p
+inoremap <C-v> <Esc>"+pa
+vnoremap <C-a><C-V> "+P
+nnoremap <C-a><C-V> "+P
+inoremap <C-a><C-V> <Esc>"+Pa
+"paste from PRIMARY
+vnoremap <C-b> "*p
+nnoremap <C-b> "*p
+inoremap <C-b> <Esc>"*pa
+vnoremap <C-a><C-b> "*P
+nnoremap <C-a><C-b> "*P
+inoremap <C-a><C-b> <Esc>"*Pa
+
+"handle buffers
+nnoremap <leader>1 :buffer 1<CR>
+nnoremap <leader>2 :buffer 2<CR>
+nnoremap <leader>3 :buffer 3<CR>
+nnoremap <leader>4 :buffer 4<CR>
+nnoremap <leader>5 :buffer 5<CR>
+nnoremap <leader>6 :buffer 6<CR>
+nnoremap <leader>7 :buffer 7<CR>
+nnoremap <leader>8 :buffer 8<CR>
+nnoremap <leader>9 :buffer 9<CR>
 
 "Function Keys
 "	paste mode enabled?
@@ -99,11 +123,15 @@ nnoremap <F10> :set paste?<CR>
 "	toggle list
 nnoremap <F5> :set list!<CR>:set list?<CR>
 
+"Enter continuous command mode
+"	need to fix bugs
+nnoremap q; :while 1 \| execute input(':') \| redraw! \| endwhile<CR>
+"nnoremap q; :echom "q; pressed"
+
 "wrap text objects
 vnoremap ' <ESC><ESC>`>a'<ESC>`<i'<ESC>`>ll
-vnoremap v <ESC><ESC>viw
 
-""switch buffers in
+"switch buffers in
 nnoremap <C-n> :bn<CR>
 nnoremap <C-p> :bp<CR>
 
@@ -136,8 +164,9 @@ cabbrev ct checktime
 augroup commentgroup
 	autocmd!
 	autocmd FileType javascript nnoremap <buffer> <localleader>c maI//<ESC>`a
-	autocmd FileType python nnoremap <buffer> <localleader>c maI#<ESC>`a
-	autocmd FileType vim nnoremap <buffer> <localleader>c maI"<ESC>`a
+	autocmd FileType python nnoremap <buffer> <localleader>c ma0i#<ESC>`a
+	autocmd FileType vim nnoremap <buffer> <localleader>c ma0i"<ESC>`a
+	autocmd FileType vim vnoremap <buffer> <localleader>c ICharsLines("\"")
 augroup END
 
 augroup pythonprogramming
@@ -145,10 +174,11 @@ augroup pythonprogramming
 	autocmd Filetype python setlocal expandtab
 augroup END
 
-" Vimscript file settings
+" foldmethod file settings
 augroup filetype_vim
 	autocmd!
 	autocmd FileType vim setlocal foldmethod=marker
+	autocmd FileType sh setlocal foldmethod=marker
 augroup END
 
 augroup onResisedVimWindow
@@ -162,3 +192,8 @@ augroup END
 "	If your operator-pending mapping ends with some text visually selected, Vim will operate on that text.
 "	Otherwise, Vim will operate on the text between the original cursor position and the new position.
 onoremap in( :<C-U>normal! f(vi(<CR>
+
+"functions
+"function! ICharsLines(str) range
+"	execute a:firstline.",".a:lastline."s/^/".a:str."/ | noh"
+"endfunction
