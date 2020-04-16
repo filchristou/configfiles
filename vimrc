@@ -106,6 +106,28 @@ vnoremap <C-a><C-b> "*P
 nnoremap <C-a><C-b> "*P
 inoremap <C-a><C-b> <Esc>"*Pa
 
+"copy word. Use register 'c'
+nnoremap <leader>y ma"cyiw`a
+vnoremap <leader>y "cy
+"cut word
+nnoremap <leader>x ma"cxiw`a
+vnoremap <leader>x "cx
+"paste word
+nnoremap <leader>p "cp
+nnoremap <leader>P "cP
+"replace word
+nnoremap <leader>r diw"cp
+nnoremap <leader>R diw"cP
+
+"visual mapping
+vnoremap a <ESC>^vg_
+
+"empty line without deleting it
+nnoremap <leader>d 0D
+
+"shift-tab
+inoremap <S-tab> <C-d>
+
 "handle buffers
 nnoremap <leader>1 :buffer 1<CR>
 nnoremap <leader>2 :buffer 2<CR>
@@ -116,6 +138,9 @@ nnoremap <leader>6 :buffer 6<CR>
 nnoremap <leader>7 :buffer 7<CR>
 nnoremap <leader>8 :buffer 8<CR>
 nnoremap <leader>9 :buffer 9<CR>
+"switch buffers in
+nnoremap <C-n> :bn<CR>
+nnoremap <C-p> :bp<CR>
 
 "Function Keys
 "	paste mode enabled?
@@ -126,14 +151,9 @@ nnoremap <F5> :set list!<CR>:set list?<CR>
 "Enter continuous command mode
 "	need to fix bugs
 nnoremap q; :while 1 \| execute input(':') \| redraw! \| endwhile<CR>
-"nnoremap q; :echom "q; pressed"
 
 "wrap text objects
 vnoremap ' <ESC><ESC>`>a'<ESC>`<i'<ESC>`>ll
-
-"switch buffers in
-nnoremap <C-n> :bn<CR>
-nnoremap <C-p> :bp<CR>
 
 "diff
 nnoremap <C-f><C-f> :w !diff --color % -<CR>

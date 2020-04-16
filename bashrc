@@ -54,8 +54,9 @@ alias ll='ls -la'
 alias grep='grep --color'
 alias ..='cd ..'
 alias uscmd='vim ~/configfiles/usefullcommands.sh'
-alias v="vim"
-alias diff="diff --color"
+alias eud='execute_under_directory'
+alias v='vim'
+alias diff='diff --color'
 
 #evn variables
 export PYTHONPATH="$PYTHONPATH:/net/arch/opt/cplex/cplex/python/3.6/x86-64_linux/:$HOME/Research/pythonutils"
