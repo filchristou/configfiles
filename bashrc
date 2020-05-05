@@ -57,9 +57,13 @@ alias uscmd='vim ~/configfiles/usefullcommands.sh'
 alias eud='execute_under_directory'
 alias v='vim'
 alias diff='diff --color'
+alias gitlog='git log --graph --oneline --decorate --all'
 
 #evn variables
 export PYTHONPATH="$PYTHONPATH:/net/arch/opt/cplex/cplex/python/3.6/x86-64_linux/:$HOME/Research/pythonutils"
 
-#always start in home folder
-cd $HOME
+#deactivate linux freeze with <C-s>
+if [[ -t 0 && $- = *i* ]] 
+then
+	stty -ixon
+fi

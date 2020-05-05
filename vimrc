@@ -67,6 +67,9 @@ set statusline+=%=%y\ %4l/%-4L\ \|%3(%c%)%-4(%V%)
 set statusline+=\ %P
 
 set pastetoggle=<F11>
+
+"dont ask to save file when changing buffer
+set hidden
 "}}}
 
 "mappings {{{
