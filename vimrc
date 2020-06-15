@@ -147,9 +147,10 @@ nnoremap <C-p> :bp<CR>
 
 "Function Keys
 "	paste mode enabled?
-nnoremap <F10> :set paste?<CR>
+nnoremap <F10> :set paste!<CR>:set paste?<CR>
 "	toggle list
 nnoremap <F5> :set list!<CR>:set list?<CR>
+nnoremap <F2> :set relativenumber!<CR>:set relativenumber?<CR>
 
 "Enter continuous command mode
 "	need to fix bugs
@@ -181,6 +182,7 @@ iabbrev @@ -- <CR>Filippos Christou<CR>filchristou@outlook.com
 cabbrev v visual
 cabbrev m messages
 cabbrev ct checktime
+cabbrev bsplit belowright split
 "}}}
 
 "autocmd {{{

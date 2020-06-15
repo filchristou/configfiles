@@ -2,6 +2,7 @@
 grep --include=\*.{c,h} -rnw '/path/to/somewhere/' -e ".*pattern.*" -n
 
 #use for extracting files from a tar.gz struct.
+#x for extract, v for verbose, z for gz files (also tar.gz), f for which file
 tar xvzf example.tar.gz -C ./where/to/extract/
 
 #open "file" with default app
@@ -24,3 +25,5 @@ du -hs 'patho/to/folder-file'
 
 #search with regex path
 find ./ -regextype posix-egrep -regex "./bash/.*/Subfolder1/.*"
+#search all directories except for "./.git/"
+find ./ -path ./.git -prune -o -print
