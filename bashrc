@@ -143,31 +143,39 @@ execute_under_directory()
 }
 
 #write the extract skript here
-extract () {
+extract () 
+{
 	if [ -f $1 ] ; then
-	   case $1 in
-		   *.tar.bz2)	tar xvjf $1    ;;
-		   *.tar.gz)	tar xvzf $1    ;;
-		   *.bz2)		bunzip2 $1	   ;;
-		   *.rar)		unrar x $1	   ;;
-		   *.gz)		gunzip $1	   ;;
-		   *.tar)		tar xvf $1	   ;;
-		   *.tbz2)		tar xvjf $1    ;;
-		   *.tgz)		tar xvzf $1    ;;
-		   *.zip)		unzip $1	   ;;
-		   *.Z)			uncompress $1  ;;
-		   *.7z)		7z x $1		   ;;
-		   *)			echo "don't know how to extract '$1'..." ;;
-	   esac
+		case $1 in
+			*.tar.bz2)	tar xvjf $1    ;;
+			*.tar.gz)	tar xvzf $1    ;;
+			*.bz2)		bunzip2 $1	   ;;
+			*.rar)		unrar x $1	   ;;
+			*.gz)		gunzip $1	   ;;
+			*.tar)		tar xvf $1	   ;;
+			*.tbz2)		tar xvjf $1    ;;
+			*.tgz)		tar xvzf $1    ;;
+			*.zip)		unzip $1	   ;;
+			*.Z)			uncompress $1  ;;
+			*.7z)		7z x $1		   ;;
+			*)			echo "don't know how to extract '$1'..." ;;
+		esac
 	else
-	   echo "'$1' is not a valid file!"
-	fi
- }
+		echo "'$1' is not a valid file!"
+fi
+}
+
+psp ()
+{
+	ps -o pid,ppid,tty,user,etime,pri,nice,vsize,rss,s,%cpu,%mem,cputime,wchan,command -p $1	
+}
+
 
 #functions end }}}
 
 alias ..='cd ..'
-alias uscmd='vim ~/configfiles/usefullcommands.sh'
+alias bashhelp='vim ~/configfiles/usefullcommands.sh'
+alias githelp='vim ~/configfiles/git2remember.sh'
 alias eud='execute_under_directory'
 alias v='vim'
 alias gitlog='git log --graph --oneline --decorate --all'
@@ -177,6 +185,9 @@ if [[ -t 0 && $- = *i* ]]
 then
 	stty -ixon
 fi
+
+#environment variables
+export SCREENDIR=$HOME/.screen
 
 source ~/.bashrc_machine_specific
 

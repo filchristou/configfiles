@@ -17,9 +17,6 @@ find ./ -name "de*" -printf "%f\n"
 #symbolic link from ~/configfiles/.vimrc to ~/.vimrc
 ln -s ~/configfiles/.vimrc ~/.vimrc
 
-#git pretty log
-git log --graph --oneline --decorate --all
-
 #show folder size. (emit -s to see recursively)
 du -hs 'patho/to/folder-file'
 
@@ -27,3 +24,10 @@ du -hs 'patho/to/folder-file'
 find ./ -regextype posix-egrep -regex "./bash/.*/Subfolder1/.*"
 #search all directories except for "./.git/"
 find ./ -path ./.git -prune -o -print
+
+#find md5sum for a whole diretory
+find demands_separate/ -type f -print0 | sort -z | xargs -0 md5sum | md5sum
+
+#processes
+#show how much time a process with 'PID' run
+ps -o etime= -p 'PID'
