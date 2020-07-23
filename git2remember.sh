@@ -27,3 +27,12 @@ git diff --no-index file1 file2
 
 #reset all files to the last commit (where HEAD is)
 git reset --hard HEAD
+
+#git stash
+git stash save "a meaningfull message"
+#show queue of stashes
+git stash list
+#git stash pop the 3rd shash (use "git stash apply" to not deleted from stash list)
+git stash pop stash@{2]
+#git stash partially
+git stash -p
