@@ -31,3 +31,6 @@ find demands_separate/ -type f -print0 | sort -z | xargs -0 md5sum | md5sum
 #processes
 #show how much time a process with 'PID' run
 ps -o etime= -p 'PID'
+
+#count all .pdf files in a directory
+ls *.pdf -1 | wc -l

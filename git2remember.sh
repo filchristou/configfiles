@@ -36,3 +36,6 @@ git stash list
 git stash pop stash@{2]
 #git stash partially
 git stash -p
+
+#update the remote branches localy
+git remote -v update

@@ -21,7 +21,8 @@
 " :set smartindent             # abbrev -  :set si
 "
 
-"to see changes since last save of the file --> :w !git diff --no-index -- % -<CR>
+"TODO
+"python recognise blocks: fold them and go to end of them
 
 "from now on aka <leader>
 let mapleader = "-"
@@ -188,10 +189,17 @@ cabbrev bsplit belowright split
 "autocmd {{{
 augroup commentgroup
 	autocmd!
-	autocmd FileType javascript nnoremap <buffer> <localleader>c maI//<ESC>`a
-	autocmd FileType python nnoremap <buffer> <localleader>c ma0i#<ESC>`a
-	autocmd FileType vim nnoremap <buffer> <localleader>c ma0i"<ESC>`a
-	autocmd FileType vim vnoremap <buffer> <localleader>c ICharsLines("\"")
+	autocmd FileType javascript nnoremap <buffer> <localleader>c maI//<ESC>`al
+
+	autocmd FileType python nnoremap <buffer> <localleader>c ma0i#<ESC>`al
+	autocmd FileType python nnoremap <buffer> <localleader>C ma0:s/^#//<CR>`a
+	autocmd FileType python vnoremap <buffer> <localleader>c :call ICharLines("#")<CR>
+	autocmd FileType python vnoremap <buffer> <localleader>C :call IDecharLines("#")<CR>
+
+	autocmd FileType vim nnoremap <buffer> <localleader>c ma0i"<ESC>`al
+	autocmd FileType vim nnoremap <buffer> <localleader>C ma0:s/^"//<CR>`a
+	autocmd FileType vim vnoremap <buffer> <localleader>c :call ICharLines("\"")<CR>
+	autocmd FileType vim vnoremap <buffer> <localleader>C :call IDecharLines("\"")<CR>
 augroup END
 
 augroup pythonprogramming
@@ -219,6 +227,9 @@ augroup END
 onoremap in( :<C-U>normal! f(vi(<CR>
 
 "functions
-"function! ICharsLines(str) range
-"	execute a:firstline.",".a:lastline."s/^/".a:str."/ | noh"
-"endfunction
+function! ICharLines(str) range
+	execute a:firstline.",".a:lastline."s/^/".a:str."/ | noh"
+endfunction
+function! IDecharLines(str) range
+	execute a:firstline.",".a:lastline."s/^".a:str."// | noh"
+endfunction
