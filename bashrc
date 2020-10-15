@@ -92,9 +92,9 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+alias ll='ls -alF --color'
+alias la='ls -AlF --color'
+alias l='ls -ACF --color'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -121,6 +121,12 @@ if ! shopt -oq posix; then
 fi
 
 # ---------- Self Written ----------
+#environment variables
+export SCREENDIR=$HOME/.screen
+export PLANTUMLPATH=$HOME/Downloads/Apps/plantuml/plantuml.jar
+export UMLDOCLET1PATH=$HOME/Downloads/Apps/umldoclet/umldoclet-1.1.4/umldoclet-1.1.4.jar
+export UMLDOCLET2PATH=$HOME/Downloads/Apps/umldoclet/umldoclet-2.0.12/umldoclet-2.0.12.jar
+export PATH=$HOME/Downloads/Apps/apache-maven-3.6.3/bin:$PATH
 
 #functions {{{
 
@@ -142,6 +148,14 @@ execute_under_directory()
 	cd $current_directory
 }
 
+show_path()
+{
+	readlink -e $1
+	if [ $? -eq 1 ]; then
+		echo "Cannot resolve path '$(realpath $1)'"	
+	fi
+}
+
 #write the extract skript here
 extract () 
 {
@@ -156,7 +170,7 @@ extract ()
 			*.tbz2)		tar xvjf $1    ;;
 			*.tgz)		tar xvzf $1    ;;
 			*.zip)		unzip $1	   ;;
-			*.Z)			uncompress $1  ;;
+			*.Z)		uncompress $1  ;;
 			*.7z)		7z x $1		   ;;
 			*)			echo "don't know how to extract '$1'..." ;;
 		esac
@@ -170,24 +184,40 @@ psp ()
 	ps -o pid,ppid,tty,user,etime,pri,nice,vsize,rss,s,%cpu,%mem,cputime,wchan,command -p $1	
 }
 
-
+convert_pdf_to_greyscale()
+{
+	gs  -sOutputFile=$2  \
+	-sDEVICE=pdfwrite  \
+	-sColorConversionStrategy=Gray  \
+	-dProcessColorModel=/DeviceGray  \
+	-dCompatibilityLevel=1.4  \
+	-dNOPAUSE  \
+	-dBATCH  $1
+}
 #functions end }}}
 
 alias ..='cd ..'
-alias bashhelp='vim ~/configfiles/usefullcommands.sh'
-alias githelp='vim ~/configfiles/git2remember.sh'
+alias bashhelp='vim ~/configfiles/bashhelp.sh'
+alias githelp='vim ~/configfiles/githelp.sh'
+alias severalhelp='vim ~/configfiles/severalhelp.sh'
+alias pumlhelp='vim ~/configfiles/pumlhelp.sh'
 alias eud='execute_under_directory'
 alias v='vim'
 alias gitlog='git log --graph --oneline --decorate --all'
+alias fpwd='show_path'
+alias pdf2bw='convert_pdf_to_greyscale'
+alias watch05d='watch --color -n 0.5 -d'
+alias pu='java -jar $PLANTUMLPATH'
+alias ru='xdg-open'
+alias ds="find -printf '%M %p\n' > ~/.util/ds/find.txt ; find -maxdepth 1 -printf '%M %p\n' > ~/.util/ds/find1.txt"
+alias dsd="find -printf '%M %p\n' > ~/.util/ds/find_diff.txt ; diff -u ~/.util/ds/find.txt ~/.util/ds/find_diff.txt"
+alias dsd1="find -maxdepth 1 -printf '%M %p\n' > ~/.util/ds/find1_diff.txt ; diff -u ~/.util/ds/find1.txt ~/.util/ds/find1_diff.txt"
 
 #deactivate linux freeze with <C-s>
 if [[ -t 0 && $- = *i* ]] 
 then
 	stty -ixon
 fi
-
-#environment variables
-export SCREENDIR=$HOME/.screen
 
 source ~/.bashrc_machine_specific
 

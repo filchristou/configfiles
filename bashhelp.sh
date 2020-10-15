@@ -24,6 +24,10 @@ du -hs 'patho/to/folder-file'
 find ./ -regextype posix-egrep -regex "./bash/.*/Subfolder1/.*"
 #search all directories except for "./.git/"
 find ./ -path ./.git -prune -o -print
+#search excluding dot files
+find . -not -path '*/\.*'
+#find all NON java files
+find . -type f -not -name "*.java"
 
 #find md5sum for a whole diretory
 find demands_separate/ -type f -print0 | sort -z | xargs -0 md5sum | md5sum
@@ -34,3 +38,10 @@ ps -o etime= -p 'PID'
 
 #count all .pdf files in a directory
 ls *.pdf -1 | wc -l
+
+#delete/move all except pdf files
+mv !(*.pdf) ./pdffolder/
+rm !(*.pdf)
+
+#watch the output of the demand every 0.5 sec and highlight differences
+watch -n 0.5 -d cat .temp.helloworld.puml

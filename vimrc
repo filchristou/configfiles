@@ -29,6 +29,9 @@ let mapleader = "-"
 "from now on aka <localleader>
 let maplocalleader = "\\"
 
+"---------------------- plug-ins ----------------------"
+let g:plantuml_executable_script='java -jar '.$PLANTUMLPATH
+
 "setting {{{
 
 "	tab
@@ -122,6 +125,8 @@ nnoremap <leader>P "cP
 "replace word
 nnoremap <leader>r diw"cp
 nnoremap <leader>R diw"cP
+"delete word and write
+nnoremap <leader>c lbvec
 
 "visual mapping
 vnoremap a <ESC>^vg_
@@ -150,8 +155,11 @@ nnoremap <C-p> :bp<CR>
 "	paste mode enabled?
 nnoremap <F10> :set paste!<CR>:set paste?<CR>
 "	toggle list
+nnoremap <F2> :w<CR> :make<CR>
+inoremap <F2> <Esc>:w<CR>:make<CR>
+vnoremap <F2> :<C-U>:w<CR>:make<CR
+nnoremap <F3> :set relativenumber!<CR>:set relativenumber?<CR>
 nnoremap <F5> :set list!<CR>:set list?<CR>
-nnoremap <F2> :set relativenumber!<CR>:set relativenumber?<CR>
 
 "Enter continuous command mode
 "	need to fix bugs
@@ -174,6 +182,9 @@ inoremap <C-S> <ESC>:w<CR>a
 nnoremap <leader>ev :tabe $MYVIMRC<CR>
 "loading vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>:noh<CR>
+
+"------------------plug-ins------------------"
+map <tab> :NERDTreeToggle<CR>
 "}}}
 
 "Abbreviations {{{
@@ -191,10 +202,15 @@ augroup commentgroup
 	autocmd!
 	autocmd FileType javascript nnoremap <buffer> <localleader>c maI//<ESC>`al
 
-	autocmd FileType python nnoremap <buffer> <localleader>c ma0i#<ESC>`al
-	autocmd FileType python nnoremap <buffer> <localleader>C ma0:s/^#//<CR>`a
-	autocmd FileType python vnoremap <buffer> <localleader>c :call ICharLines("#")<CR>
-	autocmd FileType python vnoremap <buffer> <localleader>C :call IDecharLines("#")<CR>
+	autocmd FileType plantuml nnoremap <buffer> <localleader>c ma0i'<ESC>`al
+	autocmd FileType plantuml nnoremap <buffer> <localleader>C ma0:s/^'//<CR>`a
+	autocmd FileType plantuml vnoremap <buffer> <localleader>c :call ICharLines("'")<CR>
+	autocmd FileType plantuml vnoremap <buffer> <localleader>C :call IDecharLines("'")<CR>
+
+	autocmd FileType python,sh nnoremap <buffer> <localleader>c ma0i#<ESC>`al
+	autocmd FileType python,sh nnoremap <buffer> <localleader>C ma0:s/^#//<CR>`a
+	autocmd FileType python,sh vnoremap <buffer> <localleader>c :call ICharLines("#")<CR>
+	autocmd FileType python,sh vnoremap <buffer> <localleader>C :call IDecharLines("#")<CR>
 
 	autocmd FileType vim nnoremap <buffer> <localleader>c ma0i"<ESC>`al
 	autocmd FileType vim nnoremap <buffer> <localleader>C ma0:s/^"//<CR>`a
@@ -219,6 +235,22 @@ augroup onResisedVimWindow
 	autocmd VimResized * execute "normal! \<C-W>="
 augroup END
 
+function! ToggleAutoSave()
+    if !exists('#AutoSave#TextChanged')
+        augroup AutoSave
+            autocmd!
+			autocmd TextChanged,TextChangedI <buffer> silent write! .temp.%
+        augroup END
+		echo 'autosave on'
+    else
+        augroup AutoSave
+            autocmd!
+        augroup END
+		echo 'autosave off'
+    endif
+endfunction
+
+nnoremap <F4> :call ToggleAutoSave()<CR>
 "}}}
 
 "Operator-Pending Mapping
