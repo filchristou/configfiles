@@ -94,6 +94,7 @@ fi
 # some more ls aliases
 alias ll='ls -alF --color'
 alias la='ls -AlF --color'
+alias lt='ls -AlFtr --color'
 alias l='ls -ACF --color'
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -129,7 +130,6 @@ export UMLDOCLET2PATH=$HOME/Downloads/Apps/umldoclet/umldoclet-2.0.12/umldoclet-
 export PATH=$HOME/Downloads/Apps/apache-maven-3.6.3/bin:$PATH
 
 #functions {{{
-
 #exec file in a different directory
 execute_under_directory()
 {
@@ -194,6 +194,20 @@ convert_pdf_to_greyscale()
 	-dNOPAUSE  \
 	-dBATCH  $1
 }
+
+open_random_file_with_vim()
+{
+	if [ $# -gt 1 ] 
+	then
+		echo "usage: open_random_file_with_vim [<FILE_PATTERN>]"
+		return 1
+	elif [ $# -eq 1 ]
+	then
+		vim $(ls | grep $1 | sort -R | tail -1)
+	else
+		vim $(ls | sort -R | tail -1)
+	fi
+}
 #functions end }}}
 
 alias ..='cd ..'
@@ -201,8 +215,12 @@ alias bashhelp='vim ~/configfiles/bashhelp.sh'
 alias githelp='vim ~/configfiles/githelp.sh'
 alias severalhelp='vim ~/configfiles/severalhelp.sh'
 alias pumlhelp='vim ~/configfiles/pumlhelp.sh'
+alias tophelp='vim ~/configfiles/tophelp'
+alias mutthelp='vim ~/configfiles/mutthelp.sh'
 alias eud='execute_under_directory'
 alias v='vim'
+alias vr='vim -M'
+alias vran='open_random_file_with_vim'
 alias gitlog='git log --graph --oneline --decorate --all'
 alias fpwd='show_path'
 alias pdf2bw='convert_pdf_to_greyscale'
@@ -212,6 +230,7 @@ alias ru='xdg-open'
 alias ds="find -printf '%M %p\n' > ~/.util/ds/find.txt ; find -maxdepth 1 -printf '%M %p\n' > ~/.util/ds/find1.txt"
 alias dsd="find -printf '%M %p\n' > ~/.util/ds/find_diff.txt ; diff -u ~/.util/ds/find.txt ~/.util/ds/find_diff.txt"
 alias dsd1="find -maxdepth 1 -printf '%M %p\n' > ~/.util/ds/find1_diff.txt ; diff -u ~/.util/ds/find1.txt ~/.util/ds/find1_diff.txt"
+alias jupynote='python3 -c "from notebook.notebookapp import main; main()"' 
 
 #deactivate linux freeze with <C-s>
 if [[ -t 0 && $- = *i* ]] 

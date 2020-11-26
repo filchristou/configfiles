@@ -1,0 +1,25 @@
+General:
+"k" to kill a process with a cetrain PID
+
+Sort:
+"M" to sort by memory usage
+"P" to sort by CPU usage
+"N" to sort by process ID
+"T" to sort by the running time
+
+"R" to to toggle between Reverse/Ascending Order press
+
+Show:
+"t" to change between 4 different views
+"H" to toggle between Tasks/Threads
+"c" to show full path in Command
+"V" to show tree view of processes (parent --> child)
+"1" to show all cores
+
+Filter:
+"u" to show processes from specific User
+"o" to generally filter the top list. Examples can be:
+	"COMMAND=getty"	: processes that contain “getty” in the COMMAND attribute.
+	"!COMMAND=getty": processes that do not contain “getty” in the COMMAND attribute.
+	"%CPU>3.0"		: processes with CPU utilization > 3%
+

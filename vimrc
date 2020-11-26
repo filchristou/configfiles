@@ -1,26 +1,3 @@
-" remember...
-"Comment/UNcomment : using visual block Cntr-q , selecting , then Shift i, the Esc Esc
-"to paste afte delete : "0p --> paste from non-volatile yank register 0 instead of default volatile
-"Ctrl-t --> Tab line Ctrl-D -->Detab line . Insert mode. For normal mode : >> <<
-"V, == --> auto-indent
-"before paste --> :set paste . after paste --> :set nopaste. (Maybe set pastetoggle=<F3>)
-"Go to line : normal mode, press line number, and then Shift-G
-"Go to matching bracket : %
-"Navigate through tabs : gt, gT, {i}gt
-"Scroll one line up/down : Ctrl-Y/E
-"Go where coursor was previously/forwardly : Ctrl-o/i
-"cc --> clear line and go insert mode on indent
-"to search a word : /\<word\>
-"In insert mode press Control-r {reg} to paste something from the register directly
-"To copy something from vim to external program, enter the text to @+ register: the clipboard
-"In insert mode use Control-n or Control-p to autocomplete based on the current buffer
-
-"to indent html:
-" :filetype indent on
-" :set filetype=html           # abbrev -  :set ft=html
-" :set smartindent             # abbrev -  :set si
-"
-
 "TODO
 "python recognise blocks: fold them and go to end of them
 
@@ -159,6 +136,7 @@ nnoremap <F2> :w<CR> :make<CR>
 inoremap <F2> <Esc>:w<CR>:make<CR>
 vnoremap <F2> :<C-U>:w<CR>:make<CR
 nnoremap <F3> :set relativenumber!<CR>:set relativenumber?<CR>
+nnoremap <F4> :call ToggleAutoSave()<CR>
 nnoremap <F5> :set list!<CR>:set list?<CR>
 
 "Enter continuous command mode
@@ -207,10 +185,10 @@ augroup commentgroup
 	autocmd FileType plantuml vnoremap <buffer> <localleader>c :call ICharLines("'")<CR>
 	autocmd FileType plantuml vnoremap <buffer> <localleader>C :call IDecharLines("'")<CR>
 
-	autocmd FileType python,sh nnoremap <buffer> <localleader>c ma0i#<ESC>`al
-	autocmd FileType python,sh nnoremap <buffer> <localleader>C ma0:s/^#//<CR>`a
-	autocmd FileType python,sh vnoremap <buffer> <localleader>c :call ICharLines("#")<CR>
-	autocmd FileType python,sh vnoremap <buffer> <localleader>C :call IDecharLines("#")<CR>
+	autocmd FileType python,sh,perl nnoremap <buffer> <localleader>c ma0i#<ESC>`al
+	autocmd FileType python,sh,perl nnoremap <buffer> <localleader>C ma0:s/^#//<CR>`a
+	autocmd FileType python,sh,perl vnoremap <buffer> <localleader>c :call ICharLines("#")<CR>
+	autocmd FileType python,sh,perl vnoremap <buffer> <localleader>C :call IDecharLines("#")<CR>
 
 	autocmd FileType vim nnoremap <buffer> <localleader>c ma0i"<ESC>`al
 	autocmd FileType vim nnoremap <buffer> <localleader>C ma0:s/^"//<CR>`a
@@ -218,12 +196,19 @@ augroup commentgroup
 	autocmd FileType vim vnoremap <buffer> <localleader>C :call IDecharLines("\"")<CR>
 augroup END
 
-augroup pythonprogramming
+augroup notabsprogramming
 	autocmd!
 	autocmd Filetype python setlocal expandtab
+	autocmd Filetype yaml setlocal expandtab
 augroup END
 
-" foldmethod file settings
+
+augroup onstartup
+	autocmd!
+	autocmd BufNewFile *.pl execute ":call WritePerlStartUpText()"
+	autocmd BufNewFile *.sh execute ":call WriteBashStartUpText()"
+augroup END
+
 augroup filetype_vim
 	autocmd!
 	autocmd FileType vim setlocal foldmethod=marker
@@ -234,6 +219,22 @@ augroup onResisedVimWindow
 	autocmd!
 	autocmd VimResized * execute "normal! \<C-W>="
 augroup END
+
+"}}}
+
+"Operator-Pending Mapping
+"	If your operator-pending mapping ends with some text visually selected, Vim will operate on that text.
+"	Otherwise, Vim will operate on the text between the original cursor position and the new position.
+onoremap in( :<C-U>normal! f(vi(<CR>
+
+"functions{{{
+function! ICharLines(str) range
+	execute a:firstline.",".a:lastline."s/^/".a:str."/ | noh"
+endfunction
+
+function! IDecharLines(str) range
+	execute a:firstline.",".a:lastline."s/^".a:str."// | noh"
+endfunction
 
 function! ToggleAutoSave()
     if !exists('#AutoSave#TextChanged')
@@ -250,18 +251,15 @@ function! ToggleAutoSave()
     endif
 endfunction
 
-nnoremap <F4> :call ToggleAutoSave()<CR>
+function! WritePerlStartUpText()
+	execute "normal i#!/usr/bin/perl"
+	execute "normal ouse warnings;"
+	execute "normal ouse strict;"
+	execute "normal =="
+endfunction
+
+function! WriteBashStartUpText()
+	execute "normal i#!/usr/bin/env bash"
+	execute "normal =="
+endfunction
 "}}}
-
-"Operator-Pending Mapping
-"	If your operator-pending mapping ends with some text visually selected, Vim will operate on that text.
-"	Otherwise, Vim will operate on the text between the original cursor position and the new position.
-onoremap in( :<C-U>normal! f(vi(<CR>
-
-"functions
-function! ICharLines(str) range
-	execute a:firstline.",".a:lastline."s/^/".a:str."/ | noh"
-endfunction
-function! IDecharLines(str) range
-	execute a:firstline.",".a:lastline."s/^".a:str."// | noh"
-endfunction
