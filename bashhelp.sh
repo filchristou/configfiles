@@ -22,6 +22,10 @@ du -hs 'patho/to/folder-file'
 
 #search with regex path
 find ./ -regextype posix-egrep -regex "./bash/.*/Subfolder1/.*"
+#exclude 'testdir' directory with regex
+find ./ -regextype posix-extended ! -regex ".*/testdir/?(/.*)?"
+#exclude 'testdir' and 'testdir2' directories with regex
+find ./ -regextype posix-extended ! -regex ".*/testdir/?(/.*)?" ! -regex ".*/testdir2/?(/.*)?"
 #search all directories except for "./.git/"
 find ./ -path ./.git -prune -o -print
 #search excluding dot files
@@ -30,7 +34,7 @@ find . -not -path '*/\.*'
 find . -type f -not -name "*.java"
 
 #find md5sum for a whole diretory
-find demands_separate/ -type f -print0 | sort -z | xargs -0 md5sum | md5sum
+find testdir/ -type f -print0 | sort -z | xargs -0 md5sum | awk '{print $1}' | md5sum
 
 #processes
 #show how much time a process with 'PID' run

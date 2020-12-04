@@ -128,6 +128,7 @@ export PLANTUMLPATH=$HOME/Downloads/Apps/plantuml/plantuml.jar
 export UMLDOCLET1PATH=$HOME/Downloads/Apps/umldoclet/umldoclet-1.1.4/umldoclet-1.1.4.jar
 export UMLDOCLET2PATH=$HOME/Downloads/Apps/umldoclet/umldoclet-2.0.12/umldoclet-2.0.12.jar
 export PATH=$HOME/Downloads/Apps/apache-maven-3.6.3/bin:$PATH
+export GUINAN=ikr_guinan@ugemkow.de
 
 #functions {{{
 #exec file in a different directory
@@ -208,6 +209,92 @@ open_random_file_with_vim()
 		vim $(ls | sort -R | tail -1)
 	fi
 }
+
+open_file_on_vimserver()
+{
+	if [ $# -ne 1 ] 
+	then
+		echo "usage: open_file_on_vimserver [<FILE_PATH>]"
+		return 1
+	fi
+	vim --remote $1
+	#open vim instance
+	fg
+}
+
+compare_directory_status()
+{
+	local findstart="-regextype posix-extended"
+	local findend="-printf '%M %P\n'"
+	local findparams=""
+	local POSITIONAL=()
+	local MODE=""
+	local excludedirs=""
+	while [[ $# -gt 0 ]]
+	do
+		key="$1"
+
+		case $key in
+			-s|--store)
+				MODE="store"
+				shift # past argument
+				;;
+			-d|--diff)
+				MODE="diff"
+				shift # past argument
+				#do the work here and leave
+				local findcom=$(cat ~/.util/ds/.find_command.sh)
+
+				eval "$findcom" > ~/.util/ds/find_diff.txt
+				diff -u ~/.util/ds/find.txt ~/.util/ds/find_diff.txt
+				
+				return $?
+				;;
+			-x|--max-depth)
+				maxdepth="$2"
+				findparams="$findparams -maxdepth $2"
+				shift # past argument
+				shift # past value
+				;;
+			-e|--exclude)
+				excludedirs=$2
+				findparams="$findparams ! -regex '.*/$excludedirs/?(/.*)?'"
+				shift # past argument
+				shift # past value
+				;;
+			-h|--exclude-hidden)
+				findparams="$findparams ! -regex '.*/\..*'"
+				shift # past value
+				;;
+			--default)
+				DEFAULT=YES
+				shift # past argument
+				;;
+			*)
+				POSITIONAL+=("$1") # save it in an array for later
+				shift # past argument
+				;;
+		esac
+	done
+	set -- "${POSITIONAL[@]}" # restore positional parameters
+	
+	findparams="$findstart $findparams $findend"
+	echo "executing: find $findparams"
+	echo "find $findparams" > ~/.util/ds/.find_command.sh
+
+	if [[ -n $1 ]]; then
+		echo "Last line of file specified as non-opt/last argument:"
+		tail -1 "$1"
+	fi  
+	
+	if [[ $MODE == "store" ]]
+	then
+		eval "find $findparams" > ~/.util/ds/find.txt
+	else
+		eval "find $findparams"
+	fi
+}
+
 #functions end }}}
 
 alias ..='cd ..'
@@ -217,20 +304,24 @@ alias severalhelp='vim ~/configfiles/severalhelp.sh'
 alias pumlhelp='vim ~/configfiles/pumlhelp.sh'
 alias tophelp='vim ~/configfiles/tophelp'
 alias mutthelp='vim ~/configfiles/mutthelp.sh'
+alias vimhelp='vim ~/configfiles/vimhelp.vim'
 alias eud='execute_under_directory'
-alias v='vim'
-alias vr='vim -M'
-alias vran='open_random_file_with_vim'
 alias gitlog='git log --graph --oneline --decorate --all'
 alias fpwd='show_path'
 alias pdf2bw='convert_pdf_to_greyscale'
 alias watch05d='watch --color -n 0.5 -d'
 alias pu='java -jar $PLANTUMLPATH'
 alias ru='xdg-open'
-alias ds="find -printf '%M %p\n' > ~/.util/ds/find.txt ; find -maxdepth 1 -printf '%M %p\n' > ~/.util/ds/find1.txt"
-alias dsd="find -printf '%M %p\n' > ~/.util/ds/find_diff.txt ; diff -u ~/.util/ds/find.txt ~/.util/ds/find_diff.txt"
-alias dsd1="find -maxdepth 1 -printf '%M %p\n' > ~/.util/ds/find1_diff.txt ; diff -u ~/.util/ds/find1.txt ~/.util/ds/find1_diff.txt"
+alias ds='compare_directory_status -s'
+alias dsd='compare_directory_status -d'
+alias findx='compare_directory_status'
 alias jupynote='python3 -c "from notebook.notebookapp import main; main()"' 
+
+alias v='vim'
+alias vr='vim -M'
+alias vran='open_random_file_with_vim'
+alias vserv='vim --servername VIM'
+alias vrem='open_file_on_vimserver'
 
 #deactivate linux freeze with <C-s>
 if [[ -t 0 && $- = *i* ]] 

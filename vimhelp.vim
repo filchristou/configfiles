@@ -25,3 +25,11 @@
 "abbrev
 :set si
 "
+
+"vim remote
+"open remotely a file
+vim scp://server/file
+"e.g.
+vim scp://cnode07/code/vim/test.py
+"show server list
+vim --serverlist
