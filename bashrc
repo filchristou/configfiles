@@ -251,19 +251,28 @@ compare_directory_status()
 				return $?
 				;;
 			-x|--max-depth)
-				maxdepth="$2"
 				findparams="$findparams -maxdepth $2"
 				shift # past argument
 				shift # past value
 				;;
 			-e|--exclude)
-				excludedirs=$2
-				findparams="$findparams ! -regex '.*/$excludedirs/?(/.*)?'"
+				findparams="$findparams ! -regex '.*/$2/?(/.*)?'"
 				shift # past argument
 				shift # past value
 				;;
 			-h|--exclude-hidden)
 				findparams="$findparams ! -regex '.*/\..*'"
+				shift # past value
+				;;
+			-r|--regex)
+				findparams="$findparams -regex './$2'"
+				shift # past argument
+				shift # past value
+				;;
+			-n|--not)
+				echo $2
+				findparams="$findparams ! -regex './$2'"
+				shift # past argument
 				shift # past value
 				;;
 			--default)
@@ -295,6 +304,12 @@ compare_directory_status()
 	fi
 }
 
+computation()
+{
+	local temp=$@
+	echo $(perl -E "say $temp")
+}
+
 #functions end }}}
 
 alias ..='cd ..'
@@ -316,6 +331,7 @@ alias ds='compare_directory_status -s'
 alias dsd='compare_directory_status -d'
 alias findx='compare_directory_status'
 alias jupynote='python3 -c "from notebook.notebookapp import main; main()"' 
+alias c="computation"
 
 alias v='vim'
 alias vr='vim -M'
