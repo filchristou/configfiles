@@ -1,5 +1,7 @@
 #git pretty log
 git log --graph --oneline --decorate --all
+#show branches and their tracked remote branched
+git branch -vv
 
 #delete local branches, for which the remote branches are deleted
 git remote prune origin
@@ -39,3 +41,13 @@ git stash -p
 
 #update the remote branches localy
 git remote -v update
+
+#revert file to it's staged value
+git checkout <file>
+#rever all files
+git checkout -- .
+
+#unstage file
+git remove <file> #check
+
+

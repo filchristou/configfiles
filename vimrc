@@ -60,6 +60,10 @@ nnoremap = o<ESC>
 nnoremap + O<ESC>
 nnoremap <leader>hn :noh<CR>
 
+"scroll left or right
+nnoremap ] zlzlzl
+nnoremap [ zhzhzh
+
 "move splits
 nnoremap <C-H> <C-W><
 nnoremap <C-J> <C-W>-

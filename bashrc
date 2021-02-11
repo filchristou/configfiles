@@ -122,13 +122,6 @@ if ! shopt -oq posix; then
 fi
 
 # ---------- Self Written ----------
-#environment variables
-export SCREENDIR=$HOME/.screen
-export PLANTUMLPATH=$HOME/Downloads/Apps/plantuml/plantuml.jar
-export UMLDOCLET1PATH=$HOME/Downloads/Apps/umldoclet/umldoclet-1.1.4/umldoclet-1.1.4.jar
-export UMLDOCLET2PATH=$HOME/Downloads/Apps/umldoclet/umldoclet-2.0.12/umldoclet-2.0.12.jar
-export PATH=$HOME/Downloads/Apps/apache-maven-3.6.3/bin:$PATH
-export GUINAN=ikr_guinan@ugemkow.de
 
 #functions {{{
 #exec file in a different directory
@@ -173,11 +166,12 @@ extract ()
 			*.zip)		unzip $1	   ;;
 			*.Z)		uncompress $1  ;;
 			*.7z)		7z x $1		   ;;
+			*.jar)		jar xf $1	   ;;
 			*)			echo "don't know how to extract '$1'..." ;;
 		esac
 	else
 		echo "'$1' is not a valid file!"
-fi
+	fi
 }
 
 psp ()
