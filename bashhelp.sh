@@ -49,3 +49,6 @@ rm !(*.pdf)
 
 #watch the output of the demand every 0.5 sec and highlight differences
 watch -n 0.5 -d cat .temp.helloworld.puml
+
+#use strace
+strace -o file_output.log <command> 

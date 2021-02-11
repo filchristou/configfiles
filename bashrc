@@ -316,6 +316,7 @@ alias mutthelp='vim ~/configfiles/mutthelp.sh'
 alias vimhelp='vim ~/configfiles/vimhelp.vim'
 alias eud='execute_under_directory'
 alias gitlog='git log --graph --oneline --decorate --all'
+alias gits="git status -s"
 alias fpwd='show_path'
 alias pdf2bw='convert_pdf_to_greyscale'
 alias watch05d='watch --color -n 0.5 -d'
