@@ -94,6 +94,9 @@ vnoremap <C-a><C-b> "*P
 nnoremap <C-a><C-b> "*P
 inoremap <C-a><C-b> <Esc>"*Pa
 
+"select line without newline
+nnoremap <leader>v 0v$h
+
 "copy word. Use register 'c'
 nnoremap <leader>y ma"cyiw`a
 vnoremap <leader>y "cy

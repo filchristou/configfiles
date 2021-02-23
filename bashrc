@@ -304,6 +304,22 @@ computation()
 	echo $(perl -E "say $temp")
 }
 
+tcpdump_2x_output()
+{
+	if [ $# -lt 1 ] 
+	then
+		echo "usage: tcpdump_2x_output [<FILE_PATH>] [OPTIONS]"
+		return 1
+	fi
+
+	local filename=$1
+	shift
+	local arguments=$@
+
+	echo "tcpdump $arguments -U -w - | tee $filename | tcpdump -r -"
+	tcpdump $arguments -U -w - | tee $filename | tcpdump -r -
+}
+
 #functions end }}}
 
 alias ..='cd ..'
@@ -314,6 +330,7 @@ alias pumlhelp='vim ~/configfiles/pumlhelp.sh'
 alias tophelp='vim ~/configfiles/tophelp'
 alias mutthelp='vim ~/configfiles/mutthelp.sh'
 alias vimhelp='vim ~/configfiles/vimhelp.vim'
+alias nethelp='vim ~/configfiles/nethelp.sh'
 alias eud='execute_under_directory'
 alias gitlog='git log --graph --oneline --decorate --all'
 alias gits="git status -s"
@@ -327,6 +344,7 @@ alias dsd='compare_directory_status -d'
 alias findx='compare_directory_status'
 alias jupynote='python3 -c "from notebook.notebookapp import main; main()"' 
 alias c="computation"
+alias tcpdump2x="tcpdump_2x_output"
 
 alias v='vim'
 alias vr='vim -M'
@@ -340,5 +358,5 @@ then
 	stty -ixon
 fi
 
-source ~/.bashrc_machine_specific
+source ~/.scripts/bashrc_machine_specific.sh
 
