@@ -200,9 +200,9 @@ open_random_file_with_vim()
 		return 1
 	elif [ $# -eq 1 ]
 	then
-		vim $(ls | grep $1 | sort -R | tail -1)
+		nvim $(ls | grep $1 | sort -R | tail -1)
 	else
-		vim $(ls | sort -R | tail -1)
+		nvim $(ls | sort -R | tail -1)
 	fi
 }
 
@@ -227,7 +227,7 @@ open_file_on_vimserver()
 		echo "usage: open_file_on_vimserver [<FILE_PATH>]"
 		return 1
 	fi
-	vim --remote $1
+	nvim --remote $1
 	#open vim instance
 	fg
 }
@@ -349,15 +349,14 @@ tcpdump_2x_output()
 #functions end }}}
 
 alias ..='cd ..'
-alias bashhelp='vim ~/configfiles/bashhelp.sh'
-alias githelp='vim ~/configfiles/githelp.sh'
-alias severalhelp='vim ~/configfiles/severalhelp.sh'
-alias pumlhelp='vim ~/configfiles/pumlhelp.sh'
-alias tophelp='vim ~/configfiles/tophelp'
-alias mutthelp='vim ~/configfiles/mutthelp.sh'
-alias vimhelp='vim ~/configfiles/vimhelp.vim'
-alias nethelp='vim ~/configfiles/nethelp.sh'
-
+alias bashhelp='nvim ~/configfiles/bashhelp.sh'
+alias githelp='nvim ~/configfiles/githelp.sh'
+alias severalhelp='nvim ~/configfiles/severalhelp.sh'
+alias pumlhelp='nvim ~/configfiles/pumlhelp.sh'
+alias tophelp='nvim ~/configfiles/tophelp'
+alias mutthelp='nvim ~/configfiles/mutthelp.sh'
+alias vimhelp='nvim ~/configfiles/vimhelp.vim'
+alias nethelp='nvim ~/configfiles/nethelp.sh'
 alias eud='execute_under_directory'
 alias gitlog='git log --graph --oneline --decorate --all'
 alias gits="git status -s"
@@ -373,15 +372,14 @@ alias jupynote='python3 -c "from notebook.notebookapp import main; main()"'
 alias c="computation"
 alias tcpdump2x="tcpdump_2x_output"
 
-alias nvim='~/Downloads/Apps/neovim/nightly-dev/nvim-linux64/bin/nvim'
-alias v='~/Downloads/Apps/neovim/nightly-dev/nvim-linux64/bin/nvim'
-alias vr='vim -M'
+alias v='nvim'
+alias vr='nvim -M'
 alias vran='open_random_file_with_vim'
-alias vlist='open_list_of_files_with_vim'
-alias vserv='vim --servername VIM'
+alias vserv='nvim --servername VIM'
 alias vrem='open_file_on_vimserver'
 
-#alias julia='/u/home/wima/fchrstou/Downloads/Apps/julia-1.6.2/bin/julia'
+alias pubip4='dig @resolver4.opendns.com myip.opendns.com +short -4'
+alias pubip6='dig @resolver1.ipv6-sandbox.opendns.com AAAA myip.opendns.com +short -6'
 
 #deactivate linux freeze with <C-s>
 if [[ -t 0 && $- = *i* ]] 
