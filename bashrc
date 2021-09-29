@@ -97,6 +97,7 @@ alias la='ls -AlF --color'
 alias lt='ls -AlFtr --color'
 alias l='ls -ACF --color'
 alias lh='ls -ld .?* --color'
+alias lst='ls | sort -k 1.7,1.8 -k 1.4,1.5 -k 1.1,1.3'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -205,6 +206,20 @@ open_random_file_with_vim()
 	fi
 }
 
+open_list_of_files_with_vim()
+{
+	if [ $# -gt 1 ] 
+	then 
+		echo "usage: o pen_list_of_files_with_vim [<FILE_PATTERN>]"
+		return 1
+	elif [ $# -eq 1 ]
+	then
+		vim $(find -type f | grep $1 | sort -V)
+	else
+		vim $(find -type f | sort -V)
+	fi
+}
+
 open_file_on_vimserver()
 {
 	if [ $# -ne 1 ] 
@@ -246,27 +261,36 @@ compare_directory_status()
 				return $?
 				;;
 			-x|--max-depth)
-				findparams="$findparams -maxdepth $2"
+				findparams="$findparams -maxdepth $2 "
 				shift # past argument
 				shift # past value
 				;;
 			-e|--exclude)
-				findparams="$findparams ! -regex '.*/$2/?(/.*)?'"
+				findparams="$findparams ! -regex '.*/$2/?(/.*)?' "
 				shift # past argument
 				shift # past value
 				;;
 			-h|--exclude-hidden)
-				findparams="$findparams ! -regex '.*/\..*'"
+				findparams="$findparams ! -regex '.*/\..*' "
 				shift # past value
 				;;
 			-r|--regex)
-				findparams="$findparams -regex './$2'"
+				findparams="$findparams -regex './$2' "
 				shift # past argument
 				shift # past value
 				;;
 			-n|--not)
-				echo $2
-				findparams="$findparams ! -regex './$2'"
+				findparams="$findparams ! -regex './$2' "
+				shift # past argument
+				shift # past value
+				;;
+			-f|--file)
+				findparams="$findparams -type f "
+				shift # past argument
+				;;
+			-t|--time)
+				findparams="$findparams -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | head -n $2"
+				findend=""
 				shift # past argument
 				shift # past value
 				;;
@@ -302,6 +326,7 @@ compare_directory_status()
 computation()
 {
 	local temp=$@
+	echo $temp
 	echo $(perl -E "say $temp")
 }
 
@@ -332,6 +357,7 @@ alias tophelp='vim ~/configfiles/tophelp'
 alias mutthelp='vim ~/configfiles/mutthelp.sh'
 alias vimhelp='vim ~/configfiles/vimhelp.vim'
 alias nethelp='vim ~/configfiles/nethelp.sh'
+
 alias eud='execute_under_directory'
 alias gitlog='git log --graph --oneline --decorate --all'
 alias gits="git status -s"
@@ -347,11 +373,15 @@ alias jupynote='python3 -c "from notebook.notebookapp import main; main()"'
 alias c="computation"
 alias tcpdump2x="tcpdump_2x_output"
 
-alias v='vim'
+alias nvim='~/Downloads/Apps/neovim/nightly-dev/nvim-linux64/bin/nvim'
+alias v='~/Downloads/Apps/neovim/nightly-dev/nvim-linux64/bin/nvim'
 alias vr='vim -M'
 alias vran='open_random_file_with_vim'
+alias vlist='open_list_of_files_with_vim'
 alias vserv='vim --servername VIM'
 alias vrem='open_file_on_vimserver'
+
+#alias julia='/u/home/wima/fchrstou/Downloads/Apps/julia-1.6.2/bin/julia'
 
 #deactivate linux freeze with <C-s>
 if [[ -t 0 && $- = *i* ]] 

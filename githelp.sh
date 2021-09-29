@@ -50,4 +50,9 @@ git checkout -- .
 #unstage file
 git remove <file> #check
 
+#force a branch pointer to point to a different commit
+git branch -f <branch-name> [<new-tip-commit>]
+
+#git diff only for files with regex
+git diff 1652081 -- '*.java'
 

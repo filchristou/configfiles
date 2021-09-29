@@ -5,9 +5,13 @@
 let mapleader = "-"
 "from now on aka <localleader>
 let maplocalleader = "\\"
+"as second leader underscore is used "_"
 
-"---------------------- plug-ins ----------------------"
+"---------------------- plug-ins ----------------------"{{{
+"TODO in nvim
 let g:plantuml_executable_script='java -jar '.$PLANTUMLPATH
+map <tab> :NERDTreeToggle<CR>
+"}}}
 
 "setting {{{
 
@@ -28,17 +32,22 @@ set showmatch
 "highlight search
 set hlsearch
 
-set is "incsearch
 "press :noh to remove already highlighted text
 "nnoremap <leader><space> :nohlsearch<CR>   "stop highligh
 
 set autoindent
-set mouse-=a
 
 set splitright
 
+"following not include in neovim {{{
 "show menu when pressing tab for autocompletion
 set wildmenu
+
+set mouse-=a
+syntax on
+set is "incsearch
+set pastetoggle=<F11>
+"}}}
 
 "show status linje
 "	spaces need to be escaped
@@ -47,7 +56,6 @@ set statusline=%02n:%f\ %h%m%r
 set statusline+=%=%y\ %4l/%-4L\ \|%3(%c%)%-4(%V%)
 set statusline+=\ %P
 
-set pastetoggle=<F11>
 
 "dont ask to save file when changing buffer
 set hidden
@@ -168,8 +176,10 @@ nnoremap <leader>ev :tabe $MYVIMRC<CR>
 "loading vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>:noh<CR>
 
-"------------------plug-ins------------------"
-map <tab> :NERDTreeToggle<CR>
+"second leader maps
+"replace word with the s command
+"nnoremap _r 
+
 "}}}
 
 "Abbreviations {{{
@@ -191,6 +201,11 @@ augroup commentgroup
 	autocmd FileType plantuml nnoremap <buffer> <localleader>C ma0:s/^'//<CR>`a
 	autocmd FileType plantuml vnoremap <buffer> <localleader>c :call ICharLines("'")<CR>
 	autocmd FileType plantuml vnoremap <buffer> <localleader>C :call IDecharLines("'")<CR>
+
+	autocmd FileType groovy nnoremap <buffer> <localleader>c ma0i//<ESC>`al
+	autocmd FileType groovy nnoremap <buffer> <localleader>C ma0:s/^////<CR>`a
+	autocmd FileType groovy vnoremap <buffer> <localleader>c :call ICharLines("//")<CR>
+	autocmd FileType groovy vnoremap <buffer> <localleader>C :call IDecharLines("//")<CR>
 
 	autocmd FileType python,sh,perl nnoremap <buffer> <localleader>c ma0i#<ESC>`al
 	autocmd FileType python,sh,perl nnoremap <buffer> <localleader>C ma0:s/^#//<CR>`a

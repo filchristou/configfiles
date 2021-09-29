@@ -3,3 +3,9 @@ mutt -e "my_hdr From:Obama <obama@whitehouse.org>" -e "set content_type=text/htm
 
 #send normal email oneliner
 echo "Read it good. Read it hard" | mutt -s "sera mundo" -a "projektantrag_ainet.pdf" -- $GUINAN
+
+#exit mutt command:
+<Ctrl>M
+
+#change mail directory
+'c'
