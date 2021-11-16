@@ -157,12 +157,18 @@ return require('packer').startup(function()
                 }
                 vim.api.nvim_set_keymap('n', '<C-n>', ':BufferLineCycleNext<CR>', {noremap = true})
                 vim.api.nvim_set_keymap('n', '<C-b>', ':BufferLineCyclePrev<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<C-m>', ':BufferLinePick<CR>', {noremap = true})
 
-                --vim.api.nvim_set_keymap('n', '<C-m>', ':BufferLineCloseRight<CR>', {noremap = true})
-                --vim.api.nvim_set_keymap('n', '<C-\\>', ':BufferLinePickClose<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>1', ':BufferLineGoToBuffer 1<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>2', ':BufferLineGoToBuffer 2<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>3', ':BufferLineGoToBuffer 3<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>4', ':BufferLineGoToBuffer 4<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>5', ':BufferLineGoToBuffer 5<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>6', ':BufferLineGoToBuffer 6<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>7', ':BufferLineGoToBuffer 7<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>8', ':BufferLineGoToBuffer 8<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<leader>9', ':BufferLineGoToBuffer 9<CR>', {noremap = true})
 
-                vim.api.nvim_set_keymap('n', '<C-4>', ':BufferLineMovePrev<CR>', {noremap = true})
-                vim.api.nvim_set_keymap('n', '<C-6>', ':BufferLineMoveNext<CR>', {noremap = true})
             end
     }
 
@@ -338,15 +344,6 @@ return require('packer').startup(function()
     }
 
 
-    use "rktjmp/lush.nvim"
-    use {
-        'folke/tokyonight.nvim',
-        config = function()
-            --vim.g.tokyonight_style = "night"
-            --vim.cmd[[colorscheme tokyonight]]
-        end
-    }
-
     use {
         "savq/melange",
         config = function()
@@ -355,8 +352,18 @@ return require('packer').startup(function()
         end
     }
 
-    use 'folke/lsp-colors.nvim'
-    use "mcchrish/zenbones.nvim"
+    use {
+        "jbyuki/venn.nvim",
+        config = function()
+            vim.api.nvim_set_keymap("n", "<C-Down>", "<C-v>j:VBox<cr>", {noremap = true})
+            vim.api.nvim_set_keymap("n", "<C-Up>", "<C-v>k:VBox<cr>", {noremap = true})
+            vim.api.nvim_set_keymap("n", "<C-Right>", "<C-v>l:VBox<cr>", {noremap = true})
+            vim.api.nvim_set_keymap("n", "<C-Left>", "<C-v>h:VBox<cr>", {noremap = true})
+            -- draw a box by pressing "f" with visual selection
+            vim.api.nvim_set_keymap("v", "f", ":VBox<cr>", {noremap = true})
+        end
+    }
+
 
 
 end)

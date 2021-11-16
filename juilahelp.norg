@@ -1,0 +1,34 @@
+@document.meta
+    title: juilahelp
+    description: 
+    author: fchrstou
+    categories: 
+    created: 2021-09-29
+    version: 0.1
+@end
+
+
+* To remember
+  - '@code_warntype'for checking type instability
+  - Base.@kwdef for defaulting struct constructors
+  - Meta.lower() to see after compiler
+  - 
+ ** interactive
+    - bring up the source code with @edit
+
+* Design Patterns
+  - use interface traits
+  - parametrize functions and composite structs
+  - use accessors (getters & setters)
+  - use Val parametric data type to dispatch in compile time
+
+* Packages
+  - JuliaTraits.jl
+  - Lazy.@forward
+  - StructArrays.jl
+  - Caching.jl & Memoize.jl
+  - CodeTracking for debugging code generation
+  - Mocking.jl for testing
+  - IntervalArithmetic for global 
+
+

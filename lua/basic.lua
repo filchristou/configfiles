@@ -3,7 +3,6 @@
 -- vim.g -> a table to access global variables
 -- vim.opt -> to set options
 
-require('support')
 
 vim.g.mapleader = "-"
 vim.g.maplocalleader = "\\"
@@ -29,77 +28,87 @@ vim.opt.foldlevel = 99
 vim.g.xml_syntax_folding = 1
 
 ------------- mappings -------------
-map('n', '<Space>', 'a<Space><Esc>')
-map('n', '=', 'o<Esc>')
-map('n', '+', 'O<Esc>')
-map('n', '<leader>hn', ':noh<CR>')
+vim.api.nvim_set_keymap('n', '<Space>', 'a<Space><Esc>', {noremap = true})
+vim.api.nvim_set_keymap('n', '=', 'o<Esc>', {noremap = true})
+vim.api.nvim_set_keymap('n', '+', 'O<Esc>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>hn', ':noh<CR>', {noremap = true})
 -- scroll left or right
-map('n', ']', 'zlzlzl')
-map('n', ']', 'zhzhzh')
+vim.api.nvim_set_keymap('n', ']', 'zlzlzl', {noremap = true})
+vim.api.nvim_set_keymap('n', ']', 'zhzhzh', {noremap = true})
 --move splits
-map('n', '<C-H>', '<C-W><')
-map('n', '<C-J>', '<C-W>-')
-map('n', '<C-K>', '<C-W>+')
-map('n', '<C-L>', '<C-W>>')
+vim.api.nvim_set_keymap('n', '<C-H>', '<C-W><', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-J>', '<C-W>-', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-K>', '<C-W>+', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-L>', '<C-W>>', {noremap = true})
 
 --copy	(reg x)
-map('n', '<C-c>', 'ma0v$h"xy`a')
-map('v', '<C-c>', '"xy')
+vim.api.nvim_set_keymap('n', '<C-c>', 'ma0v$h"+y`a', {noremap = true})
+vim.api.nvim_set_keymap('v', '<C-c>', '"+y', {noremap = true})
 --cut	(reg x)
-map('n', '<C-x>', 'ma0v$h"xx`a')
-map('v', '<C-x>', '"xx')
+vim.api.nvim_set_keymap('n', '<C-x>', 'ma0v$h"+x`a', {noremap = true})
+vim.api.nvim_set_keymap('v', '<C-x>', '"+x', {noremap = true})
 --paste (reg x)
-map('n', '<C-v>', '"xp')
-map('v', '<C-v>', '"xp')
-map('i', '<C-v>', '<Esc>"xpa')
-map('n', '<C-V>', '"xP')
-map('v', '<C-V>', '"xP')
-map('i', '<C-V>', '<Esc>"xPa')
+vim.api.nvim_set_keymap('n', '<C-v>', '"+p', {noremap = true})
+vim.api.nvim_set_keymap('v', '<C-v>', '"+p', {noremap = true})
+vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+pa', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-V>', '"+P', {noremap = true})
+vim.api.nvim_set_keymap('v', '<C-V>', '"+P', {noremap = true})
+vim.api.nvim_set_keymap('i', '<C-V>', '<Esc>"+Pa', {noremap = true})
 --select line without newline
-map('n', '<leader>v', '0v$h')
+vim.api.nvim_set_keymap('n', '<leader>v', '0v$h', {noremap = true})
 --copy word		(reg c)
-map('n', '<leader>y', 'ma"cyiw`a')
-map('v', '<leader>y', '"cy')
+vim.api.nvim_set_keymap('n', '<leader>y', 'ma"cyiw`a', {noremap = true})
+vim.api.nvim_set_keymap('v', '<leader>y', '"cy', {noremap = true})
 --cut word		(reg c)
-map('n', '<leader>x', 'ma"cxiw`a')
-map('v', '<leader>x', '"cx')
+vim.api.nvim_set_keymap('n', '<leader>x', 'ma"cxiw`a', {noremap = true})
+vim.api.nvim_set_keymap('v', '<leader>x', '"cx', {noremap = true})
 --paste word	(reg c)
-map('n', '<leader>p', '"cp')
-map('n', '<leader>P', '"cP')
+vim.api.nvim_set_keymap('n', '<leader>p', '"cp', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>P', '"cP', {noremap = true})
 --replace word	(reg c)
-map('n', '<leader>r', 'diw"cp')
-map('n', '<leader>R', 'diw"cP')
+vim.api.nvim_set_keymap('n', '<leader>r', 'diw"cp', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>R', 'diw"cP', {noremap = true})
 --delete word and write
-map('n', '<leader>c', 'lbvec')
+vim.api.nvim_set_keymap('n', '<leader>c', 'lbvec', {noremap = true})
 
 --empty line
-map('n', '<leader>d', '0D')
---handle buffers
-map('n', '<leader>1', ':buffer 1<CR>')
-map('n', '<leader>2', ':buffer 2<CR>')
-map('n', '<leader>3', ':buffer 3<CR>')
-map('n', '<leader>4', ':buffer 4<CR>')
-map('n', '<leader>5', ':buffer 5<CR>')
-map('n', '<leader>6', ':buffer 6<CR>')
-map('n', '<leader>7', ':buffer 7<CR>')
-map('n', '<leader>8', ':buffer 8<CR>')
-map('n', '<leader>9', ':buffer 9<CR>')
---switch buffers
-map('n', '<C-n>', ':bn<CR>')
-map('n', '<C-p>', ':bp<CR>')
+vim.api.nvim_set_keymap('n', '<leader>d', '0D', {noremap = true})
 
 --function keys
-map('n', '<F1>', ':set relativenumber!<CR>:set relativenumber?<CR>')
-map('n', '<F2>', ':set list!<CR>:set list?<CR>')
+vim.api.nvim_set_keymap('n', '<F2>', ':set relativenumber!<CR>:set relativenumber?<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<F3>', ':set list!<CR>:set list?<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<F4>', ':lua toggle_background()<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<F5>', ':lua toggle_virtualedit()<CR>', {noremap = true})
 
 --wrap visual
-map('v', "'", "<ESC><ESC>`>a'<ESC>`<i'<ESC>`>ll")
+vim.api.nvim_set_keymap('v', "'", "<ESC><ESC>`>a'<ESC>`<i'<ESC>`>ll", {noremap = true})
 
 --diff
-map('n', '<C-f><C-f>', ':w !diff --color % -<CR>')
+vim.api.nvim_set_keymap('n', '<C-f><C-f>', ':w !diff --color % -<CR>', {noremap = true})
 --searching
-map('v', '*', '"vyma:%s/<C-R>v//gn<CR>`a')
+vim.api.nvim_set_keymap('v', '*', '"vyma:%s/<C-R>v//gn<CR>`a', {noremap = true})
 --saving file
-map('n', '<C-S>', ':w<CR>')
-map('i', '<C-S>', '<ESC>:w<CR>a')
+vim.api.nvim_set_keymap('n', '<C-S>', ':w<CR>', {noremap = true})
+vim.api.nvim_set_keymap('i', '<C-S>', '<ESC>:w<CR>a', {noremap = true})
 
+--terminal
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {noremap = true})
+
+--functions
+function toggle_background()
+    if vim.o.background == "dark" then
+        vim.o.background = "light"
+    elseif vim.o.background == "light" then
+        vim.o.background = "dark"
+    end
+    print("vim.o.background=" .. vim.o.background)
+end
+
+function toggle_virtualedit()
+    if vim.o.virtualedit == "insert" or vim.o.virtualedit == "block" or vim.o.virtualedit == "onemore" or vim.o.virtualedit == "" then
+        vim.o.virtualedit = "all"
+    else
+        vim.o.virtualedit = "block"
+    end
+    print("vim.o.virtualedit=" .. vim.o.virtualedit)
+end
