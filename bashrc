@@ -389,5 +389,6 @@ then
 	stty -ixon
 fi
 
+PATH=$PATH:~/Downloads/Apps/nvim-linux64/bin
 source ~/.scripts/bashrc_machine_specific.sh
 

@@ -156,7 +156,7 @@ return require('packer').startup(function()
                     }
                 }
                 vim.api.nvim_set_keymap('n', '<C-n>', ':BufferLineCycleNext<CR>', {noremap = true})
-                vim.api.nvim_set_keymap('n', '<C-b>', ':BufferLineCyclePrev<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<C-p>', ':BufferLineCyclePrev<CR>', {noremap = true})
                 vim.api.nvim_set_keymap('n', '<C-m>', ':BufferLinePick<CR>', {noremap = true})
 
                 vim.api.nvim_set_keymap('n', '<leader>1', ':BufferLineGoToBuffer 1<CR>', {noremap = true})

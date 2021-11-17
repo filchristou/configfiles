@@ -1,0 +1,57 @@
+---
+- name: Propage personal setup
+  hosts: others
+  tasks:
+    - name: Copy '~/configfiles' file to all other hosts
+      copy:
+        src: ~/configfiles
+        dest: ~/
+    - name: Delete files in order to re-create them
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - ~/.bashrc
+        - ~/.tmux.conf
+        - ~/.config/nvim
+    - name: Create nvim folder
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - ~/.config/nvim/
+        - ~/.scripts
+        - ~/Downloads/Apps/
+    - name: Touch .scripts/bashrc_machine_specific.sh
+      file:
+        path: ~/.scripts/bashrc_machine_specific.sh
+        state: touch
+    - name: Create symlinks
+      file:
+        src: '{{ item.src }}'
+        dest: '{{ item.dest }}'
+        state: link
+      loop:
+        - { src: ~/configfiles/bashrc, dest: ~/.bashrc}
+        - { src: ~/configfiles/tmux.conf, dest: ~/.tmux.conf}
+        - { src: ~/configfiles/init.vim, dest: ~/.config/nvim/init.vim}
+        - { src: ~/configfiles/lua, dest: ~/.config/nvim/lua}
+    - name: Download nvim
+      get_url:
+        url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
+        dest: ~/Downloads/
+    - name: Extract nvim
+      unarchive:
+        src: ~/Downloads/nvim-linux64.tar.gz
+        dest: ~/Downloads/Apps/
+        remote_src: yes
+    - name: Delete archive
+      file:
+        path: ~/Downloads/nvim-linux64.tar.gz
+        state: absent
+    - name: Download Packer
+      git:
+        repo: https://github.com/wbthomason/packer.nvim
+        dest: ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+        depth: 1
+
