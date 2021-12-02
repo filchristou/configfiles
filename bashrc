@@ -390,4 +390,4 @@ fi
 PATH=$PATH:~/Downloads/Apps/nvim-linux64/bin
 source ~/.scripts/bashrc_machine_specific.sh
 
-PATH=$PATH:/u/home/wima/fchrstou/Downloads/Apps/julia/julia-default/bin
+PATH=$PATH:~/Downloads/Apps/julia/julia-default/bin
