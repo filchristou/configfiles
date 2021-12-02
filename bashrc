@@ -381,8 +381,6 @@ alias vrem='open_file_on_vimserver'
 alias pubip4='dig @resolver4.opendns.com myip.opendns.com +short -4'
 alias pubip6='dig @resolver1.ipv6-sandbox.opendns.com AAAA myip.opendns.com +short -6'
 
-alias j6='/u/home/wima/fchrstou/Downloads/Apps/julia-1.6.2/bin/julia'
-
 #deactivate linux freeze with <C-s>
 if [[ -t 0 && $- = *i* ]] 
 then
@@ -392,3 +390,4 @@ fi
 PATH=$PATH:~/Downloads/Apps/nvim-linux64/bin
 source ~/.scripts/bashrc_machine_specific.sh
 
+PATH=$PATH:/u/home/wima/fchrstou/Downloads/Apps/julia/julia-default/bin
