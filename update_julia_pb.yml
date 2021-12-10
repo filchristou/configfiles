@@ -1,0 +1,32 @@
+---
+- name: Download and Update Julia
+  hosts: all
+  tasks:
+    - name: Make a folder for Julia
+      file:
+        path: ~/Downloads/Apps/julia
+        state: directory
+    - name: Download Julia binary
+      get_url:
+        url: https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz
+        dest: ~/Downloads/
+    - name: Extract Julia
+      unarchive:
+        src: ~/Downloads/julia-1.7.0-linux-x86_64.tar.gz
+        dest: ~/Downloads/Apps/julia
+        remote_src: yes
+    - name: Delete archive
+      file:
+        path: ~/Downloads/julia-1.7.0-linux-x86_64.tar.gz
+        state: absent
+    - name: Delete previous symbolic link
+      file:
+        path: ~/Downloads/Apps/julia/julia-default
+        state: absent
+    - name: Create new updated symbolic link
+      file:
+        src: ~/Downloads/Apps/julia/julia-1.7.0
+        dest: ~/Downloads/Apps/julia/julia-default
+        state: link
+
+
