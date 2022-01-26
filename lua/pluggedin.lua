@@ -93,7 +93,7 @@ return require('packer').startup(function()
 				buf_set_keymap('n', '<leader>lh', ':lua vim.lsp.buf.hover()<CR>', {noremap = true})
 				buf_set_keymap('n', '<leader>lr', ':lua vim.lsp.buf.references()<CR>', {noremap = true})
 				buf_set_keymap('n', '<leader>ls', ':lua vim.lsp.buf.document_symbol()<CR>', {noremap = true})
-				buf_set_keymap('n', '<leader>lg', ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', {noremap = true})
+				buf_set_keymap('n', '<leader>lg', ':lua vim.diagnostic.open_float()<CR>', {noremap = true})
 			end
 
 			local lspconfig = require("lspconfig")
@@ -157,7 +157,7 @@ return require('packer').startup(function()
                 }
                 vim.api.nvim_set_keymap('n', '<C-n>', ':BufferLineCycleNext<CR>', {noremap = true})
                 vim.api.nvim_set_keymap('n', '<C-p>', ':BufferLineCyclePrev<CR>', {noremap = true})
-                vim.api.nvim_set_keymap('n', '<C-m>', ':BufferLinePick<CR>', {noremap = true})
+                --vim.api.nvim_set_keymap('n', '<C-m>', ':BufferLinePick<CR>', {noremap = true})
 
                 vim.api.nvim_set_keymap('n', '<leader>1', ':BufferLineGoToBuffer 1<CR>', {noremap = true})
                 vim.api.nvim_set_keymap('n', '<leader>2', ':BufferLineGoToBuffer 2<CR>', {noremap = true})
@@ -236,7 +236,7 @@ return require('packer').startup(function()
     }
 
     use { 
-        "nvim-neorg/neorg",  branch = 'unstable',
+        "nvim-neorg/neorg",
         config = function()
             require('neorg').setup {
                 -- Tell Neorg what modules to load

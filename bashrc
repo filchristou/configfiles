@@ -387,7 +387,7 @@ then
 	stty -ixon
 fi
 
-PATH=$PATH:~/Downloads/Apps/nvim-linux64/bin
+PATH=$PATH:~/Downloads/Apps/neovim/nvim-linux64/bin
 source ~/.scripts/bashrc_machine_specific.sh
 
 PATH=$PATH:~/Downloads/Apps/julia/julia-default/bin
