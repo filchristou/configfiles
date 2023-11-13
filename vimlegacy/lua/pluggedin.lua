@@ -106,6 +106,10 @@ return require('packer').startup(function()
 				on_attach = on_attach,
 				capabilities = create_capabilities(),
 			})
+			lsp_setup("texlab", {
+				on_attach = on_attach,
+				capabilities = create_capabilities(),
+			})
 
 
 		end,
@@ -156,8 +160,10 @@ return require('packer').startup(function()
                     }
                 }
                 vim.api.nvim_set_keymap('n', '<C-n>', ':BufferLineCycleNext<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<C-a><C-n>', ':BufferLineMoveNext<CR>', {noremap = true})
                 vim.api.nvim_set_keymap('n', '<C-p>', ':BufferLineCyclePrev<CR>', {noremap = true})
-                --vim.api.nvim_set_keymap('n', '<C-m>', ':BufferLinePick<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<C-a><C-p>', ':BufferLineMovePrev<CR>', {noremap = true})
+                vim.api.nvim_set_keymap('n', '<C-m>', ':BufferLinePick<CR>', {noremap = true})
 
                 vim.api.nvim_set_keymap('n', '<leader>1', ':BufferLineGoToBuffer 1<CR>', {noremap = true})
                 vim.api.nvim_set_keymap('n', '<leader>2', ':BufferLineGoToBuffer 2<CR>', {noremap = true})
@@ -294,54 +300,30 @@ return require('packer').startup(function()
             requires = "nvim-lua/plenary.nvim",
     }
 
-    use { 
-        'glepnir/dashboard-nvim',
-        config = function() 
-            vim.g.dashboard_default_executive = 'telescope'
-            vim.api.nvim_set_keymap('n', '<leader>ss', "<cmd>SessionSave<CR>", {noremap = true})
-            vim.api.nvim_set_keymap('n', '<leader>sl', "<cmd>SessionLoad<CR>", {noremap = true})
+    use 'glepnir/dashboard-nvim'
 
-            vim.api.nvim_set_keymap('n', '<leader><leader>1', "<cmd>DashboardFindHistory<CR>", {noremap = true})
-            vim.api.nvim_set_keymap('n', '<leader><leader>2', "<cmd>DashboardFindFile<CR>", {noremap = true})
-            vim.api.nvim_set_keymap('n', '<leader><leader>3', "<cmd>DashboardChangeColorscheme<CR>", {noremap = true})
-            vim.api.nvim_set_keymap('n', '<leader><leader>4', "<cmd>DashboardFindWord<CR>", {noremap = true})
-            vim.api.nvim_set_keymap('n', '<leader><leader>5', "<cmd>DashboardJumpMark<CR>", {noremap = true})
-            vim.api.nvim_set_keymap('n', '<leader><leader>6', "<cmd>DashboardNewFile<CR>", {noremap = true})
+ --               {
+ --                ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+ --                ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+ --                ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+ --                ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+ --                ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+ --                ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+ --                '        hyperextensible Vim-based text editor          ',
+ --                '                  (with Lua build-in)                  '
+ --               }
 
-            vim.g.dashboard_custom_shortcut = {
-                book_marks        = '--1',
-                change_colorscheme= '--2',
-                find_file         = '--3',
-                find_history      = '--4',
-                find_word         = '--5',
-                last_session      = '--6',
-                new_file          = '--7'
-            }
-            
-            vim.g.dashboard_custom_header = {
-             ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
-             ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
-             ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
-             ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
-             ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
-             ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
-             '        hyperextensible Vim-based text editor          ',
-             '                  (with Lua build-in)                  '
-            }
+ --           vim.g.dashboard_custom_footer = {
+ --               'τάχιστον νοῦς· διὰ παντὸς γὰρ τρέχει',
+ --               '- Θαλής ο Μιλήσιος, 643-548 π.Χ.'
+ --           }
 
-            vim.g.dashboard_custom_footer = {
-                'τάχιστον νοῦς· διὰ παντὸς γὰρ τρέχει',
-                '- Θαλής ο Μιλήσιος, 643-548 π.Χ.'
-            }
+ --           vim.g.dashboard_preview_command = 'cat'
+ --           --vim.g.dashboard_preview_pipeline = 'lolcat'
+ --           vim.g.dashboard_preview_file = '~/.config/nvim/neovim.cat'
+ --           vim.g.dashboard_preview_file_height = 12
+ --           vim.g.dashboard_preview_file_width = 80
 
---            vim.g.dashboard_preview_command = 'cat'
---            --vim.g.dashboard_preview_pipeline = 'lolcat'
---            vim.g.dashboard_preview_file = '~/.config/nvim/neovim.cat'
---            vim.g.dashboard_preview_file_height = 12
---            vim.g.dashboard_preview_file_width = 80
-
-        end
-    }
 
 
     use {
@@ -351,19 +333,4 @@ return require('packer').startup(function()
             vim.cmd("colorscheme melange")
         end
     }
-
-    use {
-        "jbyuki/venn.nvim",
-        config = function()
-            vim.api.nvim_set_keymap("n", "<C-Down>", "<C-v>j:VBox<cr>", {noremap = true})
-            vim.api.nvim_set_keymap("n", "<C-Up>", "<C-v>k:VBox<cr>", {noremap = true})
-            vim.api.nvim_set_keymap("n", "<C-Right>", "<C-v>l:VBox<cr>", {noremap = true})
-            vim.api.nvim_set_keymap("n", "<C-Left>", "<C-v>h:VBox<cr>", {noremap = true})
-            -- draw a box by pressing "f" with visual selection
-            vim.api.nvim_set_keymap("v", "f", ":VBox<cr>", {noremap = true})
-        end
-    }
-
-
-
 end)

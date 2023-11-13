@@ -1,11 +1,11 @@
 ---
-- name: Propage personal setup
-  hosts: others
+- name: Setup personal configuration
+  hosts: all
   tasks:
-    - name: Copy '~/configfiles' file to all other hosts
-      copy:
-        src: ~/configfiles
-        dest: ~/
+    - name: Update configfiles from github repo
+      git:
+        repo: https://github.com/filchristou/configfiles
+        dest: ~/configfiles/
     - name: Delete files in order to re-create them
       file:
         path: "{{ item }}"
@@ -13,7 +13,7 @@
       with_items:
         - ~/.bashrc
         - ~/.tmux.conf
-        - ~/.config/nvim
+        - ~/.config
     - name: Create nvim folder
       file:
         path: "{{ item }}"
@@ -21,7 +21,7 @@
       with_items:
         - ~/.config/nvim/
         - ~/.scripts
-        - ~/Downloads/Apps/
+        - ~/Downloads/Apps/neovim
     - name: Touch .scripts/bashrc_machine_specific.sh
       file:
         path: ~/.scripts/bashrc_machine_specific.sh
@@ -34,16 +34,15 @@
       loop:
         - { src: ~/configfiles/bashrc, dest: ~/.bashrc}
         - { src: ~/configfiles/tmux.conf, dest: ~/.tmux.conf}
-        - { src: ~/configfiles/init.vim, dest: ~/.config/nvim/init.vim}
-        - { src: ~/configfiles/lua, dest: ~/.config/nvim/lua}
+        - { src: ~/configfiles/nvim, dest: ~/.config/nvim}
     - name: Download nvim
       get_url:
-        url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
+        url: https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
         dest: ~/Downloads/
     - name: Extract nvim
       unarchive:
         src: ~/Downloads/nvim-linux64.tar.gz
-        dest: ~/Downloads/Apps/
+        dest: ~/Downloads/Apps/neovim/
         remote_src: yes
     - name: Delete archive
       file:
@@ -54,4 +53,6 @@
         repo: https://github.com/wbthomason/packer.nvim
         dest: ~/.local/share/nvim/site/pack/packer/start/packer.nvim
         depth: 1
+    - name: Install julia with juliaup
+        ansible.builtin.shell: curl -fsSL https://install.julialang.org | sh -s -- --yes
 

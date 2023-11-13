@@ -220,18 +220,6 @@ open_list_of_files_with_vim()
 	fi
 }
 
-open_file_on_vimserver()
-{
-	if [ $# -ne 1 ] 
-	then
-		echo "usage: open_file_on_vimserver [<FILE_PATH>]"
-		return 1
-	fi
-	nvim --remote $1
-	#open vim instance
-	fg
-}
-
 compare_directory_status()
 {
 	local findstart="-regextype posix-extended"
@@ -346,6 +334,56 @@ tcpdump_2x_output()
 	tcpdump $arguments -U -w - | tee $filename | tcpdump -r -
 }
 
+open_file_on_vimserver()
+{
+	if [ $# -ne 2 ] 
+	then
+		echo "usage: open_file_on_vimserver [<servername>] [<FILE_PATH>]"
+		return 1
+	fi
+    nvim --server ~/.cache/nvim/server_$1.pipe --remote $(realpath $2)
+	#open vim instance
+	#fg
+}
+
+instantiate_nvim_server()
+{
+    if [ $# -eq 1 ]
+    then
+        FILE=~/.cache/nvim/server_$1.pipe
+        if [ -f "$FILE" ]; then
+            echo "$FILE already is in use"
+        else
+            nvim --listen $FILE
+        fi
+    fi
+}
+
+gitlogpreferences()
+{
+    if [ $# -eq 1 ]
+    then
+        git log --graph --oneline --decorate --all HEAD~$1..HEAD
+    else
+        git log --graph --oneline --decorate --all
+    fi
+}
+
+runjuliacommand()
+{
+	julia -q --startup-file=no -E "$*"
+}
+
+connectwithsshx()
+{
+    kitty +kitten ssh cnode0$1
+}
+
+portforwardnotebook()
+{
+    echo "ssh -g -L $2:localhost:$2 -N cnode0$1"
+    ssh -g -L $2:localhost:$2 -N cnode0$1
+}
 #functions end }}}
 
 alias ..='cd ..'
@@ -358,7 +396,7 @@ alias mutthelp='nvim ~/configfiles/mutthelp.sh'
 alias vimhelp='nvim ~/configfiles/vimhelp.vim'
 alias nethelp='nvim ~/configfiles/nethelp.sh'
 alias eud='execute_under_directory'
-alias gitlog='git log --graph --oneline --decorate --all'
+alias gitlog=gitlogpreferences
 alias gits="git status -s"
 alias fpwd='show_path'
 alias pdf2bw='convert_pdf_to_greyscale'
@@ -375,11 +413,26 @@ alias tcpdump2x="tcpdump_2x_output"
 alias v='nvim'
 alias vr='nvim -M'
 alias vran='open_random_file_with_vim'
-alias vserv='nvim --servername VIM'
+alias vserv='instantiate_nvim_server'
 alias vrem='open_file_on_vimserver'
+
+alias stc='SimTreeGSControl'
+
+alias s='connectwithsshx'
+alias j='julia'
+alias jc='runjuliacommand'
 
 alias pubip4='dig @resolver4.opendns.com myip.opendns.com +short -4'
 alias pubip6='dig @resolver1.ipv6-sandbox.opendns.com AAAA myip.opendns.com +short -6'
+
+alias showjuliapkgversions='paste <(ls -1) <(cat $(find */Project.toml) | grep version)'
+
+alias xc="xclip -sel c"
+
+alias themeday="kitty +kitten themes 3024 Day"
+alias themenight="kitty +kitten themes 3024 Night"
+
+alias printbattery="cat /sys/class/power_supply/BAT0/uevent | grep POWER_SUPPLY_CAPACITY="
 
 #deactivate linux freeze with <C-s>
 if [[ -t 0 && $- = *i* ]] 
@@ -387,7 +440,11 @@ then
 	stty -ixon
 fi
 
-PATH=$PATH:~/Downloads/Apps/neovim/nvim-linux64/bin
 source ~/.scripts/bashrc_machine_specific.sh
 
+PATH=$PATH:~/Downloads/Apps/neovim/nvim-linux64/bin
 PATH=$PATH:~/Downloads/Apps/julia/julia-default/bin
+PATH=$PATH:~/Downloads/Apps/texlab/bin
+PATH=$PATH:~/Downloads/Apps/opendetex/opendetex-app
+PATH=$PATH:~/Downloads/Apps/pandoc/pandoc-2.19.2/bin
+PATH=$PATH:~/.local/kitty.app/bin 

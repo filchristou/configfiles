@@ -52,3 +52,6 @@ watch -n 0.5 -d cat .temp.helloworld.puml
 
 #use strace
 strace -o file_output.log <command> 
+
+# actively track latex changes and update pdf
+latexmk -pvc -view=none ibnf_sw_ainet.tex

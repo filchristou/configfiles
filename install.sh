@@ -3,16 +3,19 @@
 #run commands manually. still not automated.
 rm ~/.bashrc
 ln -s ~/configfiles/bashrc ~/.bashrc
-
-ln -s ~/configfiles/init.vim /u/home/wima/fchrstou/configfiles/init.vim
-ln -s ~/configfiles/lua /u/home/wima/fchrstou/configfiles/lua
+ln -s ~/configfiles/nvim ~/.config/nvim
 
 touch ~/.scripts/bashrc_machine_specific.sh
 
+# install juliaup
+curl -fsSL https://install.julialang.org | sh
+
 #install nvim
-wget https://github.com/neovim/neovim/releases/download/v0.5.1/nvim-linux64.tar.gz
-#add bin to path:
-PATH=$PATH:/u/home/wima/fchrstou/Downloads/Apps/neovim/nightly-dev/nvim-linux64/bin
+wget https://github.com/neovim/neovim/releases/download/v0.9.4/nvim-linux64.tar.gz
+mkpath -p ~/Downloads/Apps/neovim
+rm -rf ~/Downloads/Appls/neovim/*
+mv nvim-linux64.tar.gz ~/Downloads/Apps/neovim
+tar -xf ~/Downloads/Apps/neovim/nvim-linux64.tar.gz -C ~/Downloads/Apps/neovim/
 
 #for packer.nvim install
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\

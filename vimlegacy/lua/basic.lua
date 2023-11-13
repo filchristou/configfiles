@@ -3,15 +3,13 @@
 -- vim.g -> a table to access global variables
 -- vim.opt -> to set options
 
-
-vim.g.mapleader = "-"
+vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-
 
 ------------- set options -------------
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4 
+vim.opt.softtabstop = 4
 vim.opt.laststatus = 2
 vim.opt.expandtab = true
 vim.opt.number = true
@@ -24,6 +22,9 @@ vim.opt.hidden = true
 vim.opt.termguicolors = true
 vim.opt.foldmethod = 'syntax'
 vim.opt.foldlevel = 99
+vim.opt.showtabline = 2
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = true
 
 vim.g.xml_syntax_folding = 1
 
@@ -31,7 +32,7 @@ vim.g.xml_syntax_folding = 1
 vim.cmd('source ~/configfiles/legcode.vim')
 
 ------------- mappings -------------
-vim.api.nvim_set_keymap('n', '<Space>', 'a<Space><Esc>', {noremap = true})
+vim.api.nvim_set_keymap('n', '-', 'a<Space><Esc>', {noremap = true})
 vim.api.nvim_set_keymap('n', '=', 'o<Esc>', {noremap = true})
 vim.api.nvim_set_keymap('n', '+', 'O<Esc>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>hn', ':noh<CR>', {noremap = true})
@@ -44,13 +45,13 @@ vim.api.nvim_set_keymap('n', '<C-J>', '<C-W>-', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-K>', '<C-W>+', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-L>', '<C-W>>', {noremap = true})
 
---copy	(reg x)
+--copy	(global reg)
 vim.api.nvim_set_keymap('n', '<C-c>', 'ma0v$h"+y`a', {noremap = true})
 vim.api.nvim_set_keymap('v', '<C-c>', '"+y', {noremap = true})
---cut	(reg x)
+--cut	(global reg)
 vim.api.nvim_set_keymap('n', '<C-x>', 'ma0v$h"+x`a', {noremap = true})
 vim.api.nvim_set_keymap('v', '<C-x>', '"+x', {noremap = true})
---paste (reg x)
+--paste (global reg)
 vim.api.nvim_set_keymap('n', '<C-v>', '"+p', {noremap = true})
 vim.api.nvim_set_keymap('v', '<C-v>', '"+p', {noremap = true})
 vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+pa', {noremap = true})
@@ -75,8 +76,14 @@ vim.api.nvim_set_keymap('n', '<leader>R', 'diw"cP', {noremap = true})
 --delete word and write
 vim.api.nvim_set_keymap('n', '<leader>c', 'lbvec', {noremap = true})
 
+--indent code according to previous line
+vim.api.nvim_set_keymap('n', '<leader>i', 'I<Esc>v0xi<Bs><CR><Esc>', {noremap = true})
+
 --empty line
 vim.api.nvim_set_keymap('n', '<leader>d', '0D', {noremap = true})
+
+-- delete current buffer and return to previous
+vim.api.nvim_set_keymap('n', '<c-b><c-d>', ':bprevious<CR>:bdelete #<CR><CR>', {noremap = true})
 
 --function keys
 vim.api.nvim_set_keymap('n', '<F2>', ':set relativenumber!<CR>:set relativenumber?<CR>', {noremap = true})
