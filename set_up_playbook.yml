@@ -5,6 +5,8 @@
     - name: Update configfiles from github repo
       git:
         repo: https://github.com/filchristou/configfiles
+        update: true
+        version: master
         dest: ~/configfiles/
     - name: Delete files in order to re-create them
       file:
