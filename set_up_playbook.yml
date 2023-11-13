@@ -6,6 +6,7 @@
       git:
         repo: https://github.com/filchristou/configfiles
         update: true
+        force: true
         version: master
         dest: ~/configfiles/
     - name: Delete files in order to re-create them
@@ -14,6 +15,7 @@
         state: absent
       with_items:
         - ~/.bashrc
+        - ~/.inputrc
         - ~/.tmux.conf
         - ~/.config
     - name: Create nvim folder
@@ -35,6 +37,7 @@
         state: link
       loop:
         - { src: ~/configfiles/bashrc, dest: ~/.bashrc}
+        - { src: ~/configfiles/inputrc, dest: ~/.inputrc}
         - { src: ~/configfiles/tmux.conf, dest: ~/.tmux.conf}
         - { src: ~/configfiles/nvim, dest: ~/.config/nvim}
     - name: Download nvim

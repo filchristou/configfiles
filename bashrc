@@ -431,8 +431,11 @@ alias xc="xclip -sel c"
 
 alias themeday="kitty +kitten themes 3024 Day"
 alias themenight="kitty +kitten themes 3024 Night"
+alias kssh="kitty +kitten ssh"
 
 alias printbattery="cat /sys/class/power_supply/BAT0/uevent | grep POWER_SUPPLY_CAPACITY="
+
+set -o vi
 
 #deactivate linux freeze with <C-s>
 if [[ -t 0 && $- = *i* ]] 
@@ -443,8 +446,23 @@ fi
 source ~/.scripts/bashrc_machine_specific.sh
 
 PATH=$PATH:~/Downloads/Apps/neovim/nvim-linux64/bin
-PATH=$PATH:~/Downloads/Apps/julia/julia-default/bin
 PATH=$PATH:~/Downloads/Apps/texlab/bin
 PATH=$PATH:~/Downloads/Apps/opendetex/opendetex-app
 PATH=$PATH:~/Downloads/Apps/pandoc/pandoc-2.19.2/bin
 PATH=$PATH:~/.local/kitty.app/bin 
+
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/u/home/wima/fchrstou/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/u/home/wima/fchrstou/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
