@@ -387,14 +387,14 @@ portforwardnotebook()
 #functions end }}}
 
 alias ..='cd ..'
-alias bashhelp='nvim ~/configfiles/bashhelp.sh'
-alias githelp='nvim ~/configfiles/githelp.sh'
-alias severalhelp='nvim ~/configfiles/severalhelp.sh'
-alias pumlhelp='nvim ~/configfiles/pumlhelp.sh'
-alias tophelp='nvim ~/configfiles/tophelp'
-alias mutthelp='nvim ~/configfiles/mutthelp.sh'
-alias vimhelp='nvim ~/configfiles/vimhelp.vim'
-alias nethelp='nvim ~/configfiles/nethelp.sh'
+alias bashhelp='nvim ~/configfiles/help/bashhelp.sh'
+alias githelp='nvim ~/configfiles/help/githelp.sh'
+alias severalhelp='nvim ~/configfiles/help/severalhelp.sh'
+alias pumlhelp='nvim ~/configfiles/help/pumlhelp.sh'
+alias tophelp='nvim ~/configfiles/help/tophelp'
+alias mutthelp='nvim ~/configfiles/help/mutthelp.sh'
+alias vimhelp='nvim ~/configfiles/help/vimhelp.vim'
+alias nethelp='nvim ~/configfiles/help/nethelp.sh'
 alias eud='execute_under_directory'
 alias gitlog=gitlogpreferences
 alias gits="git status -s"
