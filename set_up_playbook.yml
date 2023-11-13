@@ -21,7 +21,7 @@
         path: "{{ item }}"
         state: directory
       with_items:
-        - ~/.config/nvim/
+        - ~/.config
         - ~/.scripts
         - ~/Downloads/Apps/neovim
     - name: Touch .scripts/bashrc_machine_specific.sh
