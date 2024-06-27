@@ -7,7 +7,7 @@
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = '\\'
 
 -- Special personalized features
 require("specialfeat")
@@ -32,6 +32,12 @@ vim.opt.showtabline = 2
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
 vim.opt.mouse = 'a'
+
+-- be fast
+vim.opt.ttyfast = true
+vim.opt.synmaxcol = 256
+vim.opt.lazyredraw = true
+
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`

@@ -1,23 +1,41 @@
-#!/usr/bin/env bash
+CHAPPS=~/chapps
 
-#run commands manually. still not automated.
-rm ~/.bashrc
-ln -s ~/configfiles/bashrc ~/.bashrc
-ln -s ~/configfiles/nvim ~/.config/nvim
+mkdir -p $CHAPPS/apps/
+mkdir -p $CHAPPS/bin/
 
-touch ~/.scripts/bashrc_machine_specific.sh
+touch ~/.bashrc_machine_specific.sh
+ln -sf ~/configfiles/bashrc ~/.bashrc
+ln -sf ~/configfiles/nvim ~/.config/nvim
+ln -sf ~/configfiles/wezterm.lua ~/.wezterm.lua
 
-# install juliaup
-curl -fsSL https://install.julialang.org | sh
+if [[ `uname -n` == *"cnode"* ]] || [[ `uname -n` == "pc114" ]] ; then
+	# IKR devices
 
-#install nvim
-wget https://github.com/neovim/neovim/releases/download/v0.9.4/nvim-linux64.tar.gz
-mkpath -p ~/Downloads/Apps/neovim
-rm -rf ~/Downloads/Appls/neovim/*
-mv nvim-linux64.tar.gz ~/Downloads/Apps/neovim
-tar -xf ~/Downloads/Apps/neovim/nvim-linux64.tar.gz -C ~/Downloads/Apps/neovim/
+    # binaries folder
 
-#for packer.nvim install
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    # install juliaup
+    curl -fsSL https://install.julialang.org | sh
 
+    # install wezterm
+    curl -LO https://github.com/wez/wezterm/releases/download/20240203-110809-5046fc22/WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
+    chmod +x WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
+    mv ./WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage $CHAPPS/bin/wezterm
+
+    # install nvim
+    mkdir -p $CHAPPS/apps/nvim
+    curl -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz | tar -xz -C $CHAPPS/apps/nvim/ --strip-components=1
+    ln -sf $CHAPPS/apps/nvim/bin/nvim $CHAPPS/bin/
+
+    # cargo-bins in ~/.cargo/bin
+    curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+    cargo binstall ripgrep
+
+else
+	# other devices with sudo rights
+	echo "do nothing"
+    # install homebrew
+    
+    # install riggrep
+fi
+
+# if ! type juliaup &> /dev/null; then ... fi

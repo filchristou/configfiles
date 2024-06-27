@@ -163,10 +163,16 @@ require('lazy').setup({
 
   'famiu/bufdelete.nvim',
 
+  "folke/zen-mode.nvim",
+
   {
     "nvim-neorg/neorg",
+    tag = "v6.2.0",
     build = ":Neorg sync-parsers",
     dependencies = { "nvim-lua/plenary.nvim" },
+    init = function()
+      vim.opt.conceallevel = 3
+    end,
     config = function()
       require("neorg").setup {
         load = {
@@ -175,8 +181,25 @@ require('lazy').setup({
           ["core.dirman"] = { -- Manages Neorg workspaces
             config = {
               workspaces = {
-                notes = "~/notes",
+                work = "~/notes/work",
+                personal = "~/notes/personal",
               },
+              default_workspace = "work",
+            },
+          },
+          ["core.qol.toc"] = {
+            config = {
+              close_after_use = true,
+            },
+          },
+          ["core.esupports.metagen"] = {
+            config = {
+              type = "auto"
+            }
+          },
+          ["core.presenter"] = {
+            config = {
+              zen_mode = "zen-mode",
             },
           },
         },
@@ -196,6 +219,18 @@ require('lazy').setup({
     'chomosuke/term-edit.nvim',
     ft = 'toggleterm',
     version = '1.*',
+  },
+
+  {
+    'jbyuki/venn.nvim',
+    config = function()
+      vim.api.nvim_set_keymap("n", "<C-Down>", "<C-v>j:VBox<cr>", {noremap = true})
+      vim.api.nvim_set_keymap("n", "<C-Up>", "<C-v>k:VBox<cr>", {noremap = true})
+      vim.api.nvim_set_keymap("n", "<C-Right>", "<C-v>l:VBox<cr>", {noremap = true})
+      vim.api.nvim_set_keymap("n", "<C-Left>", "<C-v>h:VBox<cr>", {noremap = true})
+      -- draw a box by pressing "f" with visual selection
+      vim.api.nvim_set_keymap("v", "f", ":VBox<cr>", {noremap = true})
+    end,
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
