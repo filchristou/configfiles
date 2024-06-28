@@ -1,0 +1,34 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+format = '''
+$battery$username@$hostname:$directory\$ '''
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character]
+success_symbol = '[\$](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+
+[hostname]
+ssh_only = false
+format = '[$hostname](bold green)[$ssh_symbol](bold blue)'
+disabled = false
+
+[username]
+style_user = 'green bold'
+style_root = 'black bold'
+format = '[$user]($style)'
+show_always = true
+
+[directory]
+format = '[$path]($style)[$read_only]($read_only_style)'
+
+[battery]
+full_symbol = '🔋 '
+charging_symbol = '⚡️ '
+discharging_symbol = '💀 '
+
+[[battery.display]] # 'bold red' style and discharging_symbol when capacity is between 0% and 10%
+threshold = 10
+style = 'bold red'

@@ -8,7 +8,9 @@ ln -sf ~/configfiles/bashrc ~/.bashrc
 ln -sf ~/configfiles/wezterm.lua ~/.wezterm.lua
 ln -sf ~/configfiles/inputrc ~/.inputrc
 ln -sf ~/configfiles/tmux.conf ~/.tmux.conf
+ln -sf ~/configfiles/zshrc ~/.zshrc
 ln -sf ~/configfiles/nvim ~/.config/nvim
+ln -sf ~/configfiles/starship.toml ~/.config/starship.toml
 
 if [[ ! `uname -n` == *"cnode"* ]] && [[ ! `uname -n` == "pc114" ]] ; then
 	# install homebrew
@@ -40,5 +42,7 @@ ln -sf $CHAPPS/apps/nvim/bin/nvim $CHAPPS/bin/
 curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 ~/.cargo/bin/cargo-binstall ripgrep -y
 
+# install starship prompt
+curl -sS https://starship.rs/install.sh | sh -s -- -b $CHAPPS/bin
 
 # if ! type juliaup &> /dev/null; then ... fi
