@@ -129,6 +129,14 @@ config.keys = {
     mods = "LEADER",
     action = act.ClearScrollback 'ScrollbackAndViewport',
   },
+  -- CMD-y starts `top` in a new window
+  {
+    key = 'n',
+    mods = 'LEADER',
+    action = wezterm.action.SpawnCommandInNewWindow {
+      args = { 'wezterm' },
+    },
+  },
 }
 
 for i = 1, 9 do

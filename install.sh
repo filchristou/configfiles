@@ -5,8 +5,10 @@ mkdir -p $CHAPPS/bin/
 
 touch ~/.bashrc_machine_specific.sh
 ln -sf ~/configfiles/bashrc ~/.bashrc
-ln -sf ~/configfiles/nvim ~/.config/nvim
 ln -sf ~/configfiles/wezterm.lua ~/.wezterm.lua
+ln -sf ~/configfiles/inputrc ~/.inputrc
+ln -sf ~/configfiles/tmux.conf ~/.tmux.conf
+ln -sf ~/configfiles/nvim ~/.config/nvim
 
 if [[ `uname -n` == *"cnode"* ]] || [[ `uname -n` == "pc114" ]] ; then
 	# IKR devices
@@ -16,10 +18,16 @@ if [[ `uname -n` == *"cnode"* ]] || [[ `uname -n` == "pc114" ]] ; then
     # install juliaup
     curl -fsSL https://install.julialang.org | sh
 
+    WEZTERM_VERSION=20240203-110809-5046fc22
+    WEZTERM_UBUNTU_VERSION=Ubuntu20.04
+    WEZTERM_APPIMAGE=WezTerm-$WEZTERM_VERSION-$WEZTERM_UBUNTU_VERSION.AppImage
     # install wezterm
-    curl -LO https://github.com/wez/wezterm/releases/download/20240203-110809-5046fc22/WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
-    chmod +x WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
-    mv ./WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage $CHAPPS/bin/wezterm
+    curl -LO https://github.com/wez/wezterm/releases/download/$WEZTERM_VERSION/$WEZTERM_APPIMAGE
+    chmod +x $WEZTERM_APPIMAGE
+    ./$WEZTERM_APPIMAGE --appimage-extract
+    rm $WEZTERM_APPIMAGE
+    mv ./squashfs-root $CHAPPS/apps/wezterm
+    ln -sf $CHAPPS/apps/wezterm/usr/bin/wezterm $CHAPPS/bin/
 
     # install nvim
     mkdir -p $CHAPPS/apps/nvim
