@@ -129,12 +129,12 @@ config.keys = {
     mods = "LEADER",
     action = act.ClearScrollback 'ScrollbackAndViewport',
   },
-  -- CMD-y starts `top` in a new window
+  -- start wezterm in a new window
   {
     key = 'n',
     mods = 'LEADER',
     action = wezterm.action.SpawnCommandInNewWindow {
-      args = { 'wezterm' },
+      args = { wezterm.executable_dir .. '/wezterm' },
     },
   },
 }
@@ -174,8 +174,6 @@ config.key_tables = {
   },
 }
 
-
--- scrolling percentage
--- config.default_prog = {'zsh'}
+config.default_prog = {'zsh'}
 
 return config

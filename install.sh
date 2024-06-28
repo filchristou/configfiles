@@ -45,4 +45,9 @@ curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-
 # install starship prompt
 curl -sS https://starship.rs/install.sh | sh -s -- -b $CHAPPS/bin
 
+# fzf
+mkdir -p $CHAPPS/apps/fzf
+curl -L https://github.com/junegunn/fzf/releases/download/0.53.0/fzf-0.53.0-linux_amd64.tar.gz | tar -xz -C $CHAPPS/apps/fzf
+ln -sf $CHAPPS/apps/fzf/fzf $CHAPPS/bin/
+
 # if ! type juliaup &> /dev/null; then ... fi
