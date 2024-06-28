@@ -10,6 +10,13 @@ ln -sf ~/configfiles/inputrc ~/.inputrc
 ln -sf ~/configfiles/tmux.conf ~/.tmux.conf
 ln -sf ~/configfiles/nvim ~/.config/nvim
 
+if [[ ! `uname -n` == *"cnode"* ]] && [[ ! `uname -n` == "pc114" ]] ; then
+	# install homebrew
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # install riggrep
+fi
+
 # install juliaup
 curl -fsSL https://install.julialang.org | sh
 
@@ -33,12 +40,5 @@ ln -sf $CHAPPS/apps/nvim/bin/nvim $CHAPPS/bin/
 curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 ~/.cargo/bin/cargo-binstall ripgrep -y
 
-if [[ ! `uname -n` == *"cnode"* ]] && [[ ! `uname -n` == "pc114" ]] ; then
-	# other devices with sudo rights
-	echo "do nothing"
-	# install homebrew
-
-    # install riggrep
-fi
 
 # if ! type juliaup &> /dev/null; then ... fi

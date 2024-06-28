@@ -464,6 +464,13 @@ if [[ `uname -n` == *"cnode"* ]]; then
 	export JULIA_DEPOT_PATH="/u/bulk/home/wima/fchrstou/julia"
 fi
 
+# If not in IKR devices
+if [[ ! `uname -n` == *"cnode"* ]] && [[ ! `uname -n` == "pc114" ]] ; then
+
+	PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
+	# install riggrep
+fi
+
 # >>> juliaup initialize >>>
 
 # !! Contents within this block are managed by juliaup !!
