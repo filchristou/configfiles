@@ -31,7 +31,7 @@ ln -sf $CHAPPS/apps/nvim/bin/nvim $CHAPPS/bin/
 
 # cargo-bins in ~/.cargo/bin
 curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-cargo binstall ripgrep
+~/.cargo/bin/cargo-binstall ripgrep -y
 
 if [[ ! `uname -n` == *"cnode"* ]] && [[ ! `uname -n` == "pc114" ]] ; then
 	# other devices with sudo rights
