@@ -298,6 +298,15 @@ require('bufferline').setup{
     separator_style = "thin"
   }
 }
+
+require('onedark').setup  {
+    style = 'dark', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+
+    -- toggle theme style ---
+    toggle_style_key = "<leader>td", -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+    toggle_style_list = {'dark', 'light'}, -- List of styles to toggle between
+}
+
 vim.api.nvim_set_keymap('n', '<C-n>', ':BufferLineCycleNext<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-a><C-n>', ':BufferLineMoveNext<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-p>', ':BufferLineCyclePrev<CR>', {noremap = true})
@@ -325,27 +334,6 @@ vim.api.nvim_set_keymap('n', '<leader>017', ':BufferLineGoToBuffer 17<CR>', {nor
 vim.api.nvim_set_keymap('n', '<leader>018', ':BufferLineGoToBuffer 18<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>019', ':BufferLineGoToBuffer 19<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>020', ':BufferLineGoToBuffer 20<CR>', {noremap = true})
-
-require('dashboard').setup {
-  theme = 'hyper',
-  shortcut_type = 'number',
-  config = {
-    header = {
-      ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
-      ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
-      ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
-      ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
-      ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
-      ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
-      '        hyperextensible Vim-based text editor          ',
-      '                  (with Lua build-in)                  '
-    },
-    footer = {
-      'τάχιστον νοῦς· διὰ παντὸς γὰρ τρέχει',
-      '- Θαλής ο Μιλήσιος, 643-548 π.Χ.'
-    }
-  }
-}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

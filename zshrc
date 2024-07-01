@@ -19,6 +19,8 @@ if [[ `uname -n` == *"cnode"* ]]; then
     export BULK="/u/bulk/home/wima/fchrstou"
 fi
 
+export EDITOR=nvim
+
 # If not in IKR devices
 if [[ ! `uname -n` == *"cnode"* ]] && [[ ! `uname -n` == "pc114" ]] ; then
 
@@ -31,6 +33,8 @@ fi
 source ~/configfiles/zshrcmore.zsh
 # machine specific (not in github)
 source ~/.bashrc_machine_specific.sh
+# fzf zsh functionalities
+source <(fzf --zsh)
 
 #
 # ============ Plugins ============
@@ -85,6 +89,8 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+# light theme adaptation
+zstyle ':fzf-tab:*' fzf-flags --color=light
 
 #deactivate linux freeze with <C-s>
 if [[ -t 0 && $- = *i* ]] 
@@ -103,6 +109,7 @@ alias s='connecttocnodes'
 alias j='julia'
 alias jc='runjuliacommand'
 alias v='nvim'
+alias t='tmux'
 alias ru='xdg-open'
 alias gits="git status -s"
 alias gitlog=gitlogpreferences

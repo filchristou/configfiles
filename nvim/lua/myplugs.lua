@@ -163,8 +163,6 @@ require('lazy').setup({
 
   'famiu/bufdelete.nvim',
 
-  "folke/zen-mode.nvim",
-
   {
     "nvim-neorg/neorg",
     tag = "v6.2.0",
@@ -207,12 +205,6 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'glepnir/dashboard-nvim',
-    event = 'VimEnter',
-    dependencies = { 'nvim-tree/nvim-web-devicons'}
-  },
-
   {'akinsho/toggleterm.nvim', version = "*", config = true},
 
   {
@@ -221,17 +213,6 @@ require('lazy').setup({
     version = '1.*',
   },
 
-  {
-    'jbyuki/venn.nvim',
-    config = function()
-      vim.api.nvim_set_keymap("n", "<C-Down>", "<C-v>j:VBox<cr>", {noremap = true})
-      vim.api.nvim_set_keymap("n", "<C-Up>", "<C-v>k:VBox<cr>", {noremap = true})
-      vim.api.nvim_set_keymap("n", "<C-Right>", "<C-v>l:VBox<cr>", {noremap = true})
-      vim.api.nvim_set_keymap("n", "<C-Left>", "<C-v>h:VBox<cr>", {noremap = true})
-      -- draw a box by pressing "f" with visual selection
-      vim.api.nvim_set_keymap("v", "f", ":VBox<cr>", {noremap = true})
-    end,
-  },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.

@@ -77,11 +77,17 @@ vim.api.nvim_set_keymap('n', '+', 'O<Esc>', {noremap = true})
 
 vim.api.nvim_set_keymap('n', '<leader>hn', ':noh<CR>', {noremap = true})
 
--- move splits
-vim.api.nvim_set_keymap('n', '<C-H>', '<C-W><', {noremap = true})
-vim.api.nvim_set_keymap('n', '<C-J>', '<C-W>-', {noremap = true})
-vim.api.nvim_set_keymap('n', '<C-K>', '<C-W>+', {noremap = true})
-vim.api.nvim_set_keymap('n', '<C-L>', '<C-W>>', {noremap = true})
+-- resize splits
+vim.api.nvim_set_keymap('n', '<C-Left>', '<C-W><', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-Down>', '<C-W>-', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-Up>', '<C-W>+', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-Right>', '<C-W>>', {noremap = true})
+
+-- move around to splits
+vim.api.nvim_set_keymap('n', '<C-l>', ':wincmd l<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-j>', ':wincmd j<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-k>', ':wincmd k<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-h>', ':wincmd h<CR>', {noremap = true})
 
 --select line without newline
 vim.api.nvim_set_keymap('n', '<leader>v', '0v$h', {noremap = true})
@@ -120,7 +126,6 @@ vim.api.nvim_set_keymap('n', '<leader>c', 'lbvec', {noremap = true})
 -- function keys
 vim.api.nvim_set_keymap('n', '<F2>', ':set relativenumber!<CR>:set relativenumber?<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F3>', ':set list!<CR>:set list?<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<F4>', ':lua toggle_background()<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F5>', ':lua toggle_virtualedit()<CR>', {noremap = true})
 
 -- wrap visual

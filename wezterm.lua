@@ -4,8 +4,6 @@ local act = wezterm.action
 local config = wezterm.config_builder()
 
 
-config.default_prog = { "bash" }
-
 config.font = wezterm.font 'JetBrains Mono'
 
 config.enable_scroll_bar = true
@@ -17,7 +15,6 @@ config.window_padding = {
   bottom = 0,
 }
 
-
 config.color_schemes = {
 	["mydark"] = wezterm.color.get_builtin_schemes()['Bamboo'],
 	["mylight"] = wezterm.color.get_builtin_schemes()['Bamboo Light']
@@ -25,7 +22,7 @@ config.color_schemes = {
 
 config.color_scheme = "mylight"
 
-function toggle_dark_light_mode(window, pane)
+wezterm.on("toggle-dark-light-mode", function (window, pane)
   print("got event")
   local overrides = window:get_config_overrides() or {}
   if overrides.color_scheme == "mydark" then
@@ -35,14 +32,13 @@ function toggle_dark_light_mode(window, pane)
   end
   window:set_config_overrides(overrides)
 end
-
-wezterm.on("toggle-dark-light-mode", toggle_dark_light_mode)
+)
 
 config.hide_tab_bar_if_only_one_tab = true
 
 config.leader = { key = 'Space', mods = 'CTRL|SHIFT', timeout_milliseconds = 1000 }
 
-config.scrollback_lines = 10000
+config.scrollback_lines = 100000
 
 config.keys = {
   -- This will create a new split and run your default program inside it
@@ -66,38 +62,82 @@ config.keys = {
   -- Up a page
   {
     key = "PageUp",
-    mods = "SHIFT",
     action = act.ScrollByPage(-1)
   },
   -- Up half a page
   {
     key = "PageUp",
-    mods = "CTRL|SHIFT",
+    mods = "SHIFT",
     action = act.ScrollByPage(-0.5)
   },
   -- Down a page
   {
     key = "PageDown",
-    mods = "SHIFT",
     action = act.ScrollByPage(1)
   },
   -- Down half a page
   {
     key = "PageDown",
-    mods = "CTRL|SHIFT",
+    mods = "SHIFT",
     action = act.ScrollByPage(0.5)
   },
-  -- Go to previous tab
+  -- Clear scrollbar
   {
-    key = "[",
+    key = "c",
     mods = "LEADER",
+    action = act.ClearScrollback 'ScrollbackAndViewport',
+  },
+  -- Activate one tab down
+  {
+    key = "PageDown",
+    mods = "CTRL|SHIFT",
+    action = act.ActivateTabRelative(1)
+  },
+  -- Activate one tab up
+  {
+    key = "PageUp",
+    mods = "CTRL|SHIFT",
     action = act.ActivateTabRelative(-1)
   },
-  -- Go to next tab
   {
-    key = "]",
-    mods = "LEADER",
-    action = act.ActivateTabRelative(1)
+    key = 'h',
+    mods = 'CTRL|SHIFT',
+    action = act.ActivatePaneDirection 'Left',
+  },
+  {
+    key = 'l',
+    mods = 'CTRL|SHIFT',
+    action = act.ActivatePaneDirection 'Right',
+  },
+  {
+    key = 'k',
+    mods = 'CTRL|SHIFT',
+    action = act.ActivatePaneDirection 'Up',
+  },
+  {
+    key = 'j',
+    mods = 'CTRL|SHIFT',
+    action = act.ActivatePaneDirection 'Down',
+  },
+  {
+    key = 'LeftArrow',
+    mods = 'CTRL|SHIFT',
+    action = act.AdjustPaneSize({"Left", 1})
+  },
+  {
+    key = 'RightArrow',
+    mods = 'CTRL|SHIFT',
+    action = act.AdjustPaneSize({"Right", 1})
+  },
+  {
+    key = 'UpArrow',
+    mods = 'CTRL|SHIFT',
+    action = act.AdjustPaneSize({"Up", 1})
+  },
+  {
+    key = 'DownArrow',
+    mods = 'CTRL|SHIFT',
+    action = act.AdjustPaneSize({"Down", 1})
   },
   -- Open ShowTabNavigator
   {
@@ -105,29 +145,10 @@ config.keys = {
     mods = "LEADER",
     action = act.ShowTabNavigator
   },
-  -- Activate resize_table KeyTable
-  {
-    key = "r",
-    mods = "LEADER",
-    action = act.ActivateKeyTable({name="resize_table", one_shot=false})
-  },
-  -- Activate move_table KeyTable
-  {
-    key = "m",
-    mods = "LEADER",
-    action = act.ActivateKeyTable({name="move_table", one_shot=false})
-  },
-  -- Activate activate_table KeyTable
-  {
-    key = "a",
-    mods = "LEADER",
-    action = act.ActivateKeyTable({name="activate_table", one_shot=false})
-  },
-  -- Clear scrollbar
-  {
-    key = "c",
-    mods = "LEADER",
-    action = act.ClearScrollback 'ScrollbackAndViewport',
+  -- CTRL-SHIFT-l activates the debug overlay
+  { key = 'D', 
+    mods = 'CTRL|SHIFT', 
+    action = wezterm.action.ShowDebugOverlay 
   },
   -- start wezterm in a new window
   {
@@ -136,6 +157,30 @@ config.keys = {
     action = wezterm.action.SpawnCommandInNewWindow {
       args = { wezterm.executable_dir .. '/wezterm' },
     },
+  },
+  -- Activate resize_table KeyTable
+  {
+    key = "r",
+    mods = "CTRL|SHIFT",
+    action = act.ActivateKeyTable({name="resize_table", one_shot=false})
+  },
+  -- Activate activate_table KeyTable
+  {
+    key = "a",
+    mods = "LEADER",
+    action = act.ActivateKeyTable({name="activate_table", one_shot=false})
+  },
+  -- Disable default actions
+  {
+    key = "PageDown",
+    mods = "CTRL",
+    action = 'DisableDefaultAssignment'
+  },
+  -- Disable default actions
+  {
+    key = "PageUp",
+    mods = "CTRL",
+    action = 'DisableDefaultAssignment'
   },
 }
 
@@ -149,18 +194,10 @@ end
 
 config.key_tables = {
   resize_table = {
-    {key = "h", action = act.AdjustPaneSize({"Left", 1}) },
-    {key = "j", action = act.AdjustPaneSize({"Down", 1}) },
-    {key = "k", action = act.AdjustPaneSize({"Up", 1}) },
-    {key = "l", action = act.AdjustPaneSize({"Right", 1}) },
-    {key = "Escape", action = "PopKeyTable" },
-    {key = "Enter", action = "PopKeyTable" },
-  },
-  move_table = {
-    {key = "h", action = act.MoveTabRelative(-1) },
-    {key = "j", action = act.MoveTabRelative(-1) },
-    {key = "k", action = act.MoveTabRelative(1) },
-    {key = "l", action = act.MoveTabRelative(1) },
+    {key = "LeftArrow", action = act.AdjustPaneSize({"Left", 1}) },
+    {key = "DownArrow", action = act.AdjustPaneSize({"Down", 1}) },
+    {key = "UpArrow", action = act.AdjustPaneSize({"Up", 1}) },
+    {key = "RightArrow", action = act.AdjustPaneSize({"Right", 1}) },
     {key = "Escape", action = "PopKeyTable" },
     {key = "Enter", action = "PopKeyTable" },
   },
