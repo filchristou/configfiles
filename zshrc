@@ -63,18 +63,17 @@ case "$TERM" in
 esac
 
 # History
-# HISTSIZE=5000
-# HISTFILE=~/.zsh_history
-# SAVEHIST=$HISTSIZE
-# HISTDUP=erase
-# setopt appendhistory
-# setopt sharehistory
-# setopt hist_ignore_space
-# setopt hist_ignore_all_dups
-# setopt hist_save_no_dups
-# setopt hist_ignore_dups
-# setopt hist_find_no_dups
-# setopt auto_cd
+HISTSIZE=10000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
 # Keybindings
 # bindkey '^p' history-search-backward
@@ -130,6 +129,8 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+alias entercobra='~/IT/knock_lab --target 129.69.172.4 && sleep 0.5 && ssh cobra -t -o RemoteCommand="zsh"'
 
 # >>> juliaup initialize >>>
 

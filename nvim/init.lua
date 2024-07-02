@@ -59,6 +59,7 @@ vim.wo.number = true
 vim.wo.signcolumn = 'yes'
 
 vim.g.xml_syntax_folding = 1
+vim.g.sleuth_tex_defaults = 'tabstop=4'
 
 -- [[ Basic Keymaps ]]
 
