@@ -485,4 +485,3 @@ case ":$PATH:" in
 esac
 
 # <<< juliaup initialize <<<
-

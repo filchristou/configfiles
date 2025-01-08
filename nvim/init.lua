@@ -32,6 +32,7 @@ vim.opt.showtabline = 2
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
 vim.opt.mouse = 'a'
+vim.opt.conceallevel = 0
 
 -- be fast
 vim.opt.ttyfast = true
@@ -134,8 +135,8 @@ vim.api.nvim_set_keymap('v', "'", "<ESC><ESC>`>a'<ESC>`<i'<ESC>`>ll", {noremap =
 
 -- diff
 vim.api.nvim_set_keymap('n', '<C-f><C-f>', ':w !diff --color % -<CR>', {noremap = true})
-vim.api.nvim_set_keymap('v', '<leader>d', ':lua catselection("~/.util/ds/diff1.txt")<CR>', {noremap = true})
-vim.api.nvim_set_keymap('v', '<leader>f', ':lua catandshowdiff()<CR>', {noremap = true})
+vim.api.nvim_set_keymap('v', '<leader>dd', ':lua catselection("~/.util/ds/diff1.txt")<CR>', {noremap = true})
+vim.api.nvim_set_keymap('v', '<leader>ds', ':lua catandshowdiff()<CR>', {noremap = true})
 
 -- saving file
 vim.api.nvim_set_keymap('n', '<C-S>', ':w<CR>', {noremap = true})

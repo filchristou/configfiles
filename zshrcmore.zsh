@@ -8,7 +8,7 @@ show_path()
 
 connecttocnodes()
 {
-    ssh cnode0$1
+    ssh cnode0$1 -to RemoteCommand="zsh -l"
 }
 
 runjuliacommand()

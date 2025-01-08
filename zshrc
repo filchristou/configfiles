@@ -14,9 +14,10 @@ PATH=$PATH:~/.cargo/bin
 
 # JULIA DEPOT on bulk if in cnodes
 if [[ `uname -n` == *"cnode"* ]]; then
-	export JULIAUP_DEPOT_PATH="/u/bulk/home/wima/fchrstou/julia"
-	export JULIA_DEPOT_PATH="/u/bulk/home/wima/fchrstou/julia"
-    export BULK="/u/bulk/home/wima/fchrstou"
+    export JULIAUP_DEPOT_PATH="/u/bulk/home/wima/fchrstou/julia"
+    export JULIA_DEPOT_PATH="/u/bulk/home/wima/fchrstou/julia"
+    export BULK="/u/bulk/home/wima/fchrstou/"
+    export JULIADATA="/u/share/all/julia_data/"
 fi
 
 export EDITOR=nvim
@@ -29,6 +30,9 @@ if [[ ! `uname -n` == *"cnode"* ]] && [[ ! `uname -n` == "pc114" ]] ; then
 fi
 
 
+if [[ `uname -n` == *"cnode"* ]]; then
+    source /etc/profile
+fi
 # some functions
 source ~/configfiles/zshrcmore.zsh
 # machine specific (not in github)
@@ -108,7 +112,7 @@ alias s='connecttocnodes'
 alias j='julia'
 alias jc='runjuliacommand'
 alias v='nvim'
-alias t='tmux'
+alias t='tmux -u'
 alias ru='xdg-open'
 alias gits="git status -s"
 alias gitlog=gitlogpreferences
@@ -123,6 +127,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+    alias diff='diff --color=auto'
 fi
 
 # some more ls aliases
@@ -132,17 +137,18 @@ alias l='ls -CF'
 
 alias entercobra='~/IT/knock_lab --target 129.69.172.4 && sleep 0.5 && ssh cobra -t -o RemoteCommand="zsh"'
 
+alias runic="julia --project=@runic -e 'using Runic; exit(Runic.main(ARGS))' --"
+
+export ST_PATH=/u/home/wima/fchrstou/GitProjects/simtree_wrapper
+function st(){
+    source $ST_PATH/st_wrapper.bash
+}
+
 # >>> juliaup initialize >>>
 
 # !! Contents within this block are managed by juliaup !!
 
-case ":$PATH:" in
-    *:/u/home/wima/fchrstou/.juliaup/bin:*)
-        ;;
-
-    *)
-        export PATH=/u/home/wima/fchrstou/.juliaup/bin${PATH:+:${PATH}}
-        ;;
-esac
+path=('/u/home/wima/fchrstou/.juliaup/bin' $path)
+export PATH
 
 # <<< juliaup initialize <<<

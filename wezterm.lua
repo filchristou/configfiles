@@ -81,6 +81,16 @@ config.keys = {
     mods = "SHIFT",
     action = act.ScrollByPage(0.5)
   },
+  --Upj one line
+  { key = 'PageUp', 
+    mods = 'CTRL|SHIFT', 
+    action = act.ScrollByLine(-1) 
+  },
+  -- Down one line
+  { key = 'PageDown', 
+    mods = 'CTRL|SHIFT', 
+    action = act.ScrollByLine(1) 
+  },
   -- Clear scrollbar
   {
     key = "c",
@@ -89,16 +99,23 @@ config.keys = {
   },
   -- Activate one tab down
   {
-    key = "PageDown",
+    key = "n",
     mods = "CTRL|SHIFT",
     action = act.ActivateTabRelative(1)
   },
   -- Activate one tab up
   {
-    key = "PageUp",
+    key = "p",
     mods = "CTRL|SHIFT",
     action = act.ActivateTabRelative(-1)
   },
+  { key = 'P', 
+    mods = 'LEADER', 
+    action = act.MoveTabRelative(-1) 
+  },
+  { key = 'N', 
+    mods = 'LEADER', 
+    action = act.MoveTabRelative(1) },
   {
     key = 'h',
     mods = 'CTRL|SHIFT',
@@ -150,13 +167,15 @@ config.keys = {
     mods = 'CTRL|SHIFT', 
     action = wezterm.action.ShowDebugOverlay 
   },
-  -- start wezterm in a new window
+  {
+    key = 'Enter',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.ActivateCommandPalette,
+  },
   {
     key = 'n',
     mods = 'LEADER',
-    action = wezterm.action.SpawnCommandInNewWindow {
-      args = { wezterm.executable_dir .. '/wezterm' },
-    },
+    action = wezterm.action.SpawnCommandInNewWindow ,
   },
   -- Activate resize_table KeyTable
   {
@@ -164,11 +183,18 @@ config.keys = {
     mods = "CTRL|SHIFT",
     action = act.ActivateKeyTable({name="resize_table", one_shot=false})
   },
-  -- Activate activate_table KeyTable
+  -- rename tab interactively
   {
-    key = "a",
-    mods = "LEADER",
-    action = act.ActivateKeyTable({name="activate_table", one_shot=false})
+    key = 'r',
+    mods = 'LEADER',
+    action = act.PromptInputLine {
+      description = 'Enter new name for tab',
+      action = wezterm.action_callback(function(window, pane, line)
+	if line then
+	  window:active_tab():set_title(line)
+	end
+      end),
+    },
   },
   -- Disable default actions
   {
@@ -201,16 +227,10 @@ config.key_tables = {
     {key = "Escape", action = "PopKeyTable" },
     {key = "Enter", action = "PopKeyTable" },
   },
-  activate_table = {
-    {key = "h", action = act.ActivateTabRelative(-1) },
-    {key = "j", action = act.ActivateTabRelative(-1) },
-    {key = "k", action = act.ActivateTabRelative(1) },
-    {key = "l", action = act.ActivateTabRelative(1) },
-    {key = "Escape", action = "PopKeyTable" },
-    {key = "Enter", action = "PopKeyTable" },
-  },
 }
 
 config.default_prog = {'zsh'}
+
+
 
 return config

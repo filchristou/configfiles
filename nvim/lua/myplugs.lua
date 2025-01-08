@@ -100,6 +100,14 @@ require('lazy').setup({
   },
 
   {
+    "quarto-dev/quarto-nvim",
+    dependencies = {
+      "jmbuhr/otter.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
+
+  {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- See `:help indent_blankline.txt`
@@ -130,7 +138,7 @@ require('lazy').setup({
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      -- 'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = ':TSUpdate',
   },
@@ -169,7 +177,7 @@ require('lazy').setup({
     build = ":Neorg sync-parsers",
     dependencies = { "nvim-lua/plenary.nvim" },
     init = function()
-      vim.opt.conceallevel = 3
+      vim.opt.conceallevel = 0
     end,
     config = function()
       require("neorg").setup {
@@ -211,6 +219,12 @@ require('lazy').setup({
     'chomosuke/term-edit.nvim',
     ft = 'toggleterm',
     version = '1.*',
+  },
+
+  -- Code Formatter
+  {
+      'stevearc/conform.nvim',
+      opts = {},
   },
 
 

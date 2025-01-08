@@ -36,7 +36,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'julia', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'vimdoc', 'vim' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -243,40 +243,40 @@ cmp.setup {
 }
 
 require('Comment').setup{
- toggler = {
-        ---Line-comment toggle keymap
-        line = '\\cc',
-        ---Block-comment toggle keymap
-        block = '\\bc',
-    },
-    ---LHS of operator-pending mappings in NORMAL and VISUAL mode
-    opleader = {
-        ---Line-comment keymap
-        line = '\\c',
-        ---Block-comment keymap
-        block = '\\b',
-    },
-    ---LHS of extra mappings
-    extra = {
-        ---Add comment on the line above
-        above = '\\cO',
-        ---Add comment on the line below
-        below = '\\co',
-        ---Add comment at the end of line
-        eol = '\\cA',
-    },
+  toggler = {
+    ---Line-comment toggle keymap
+    line = '\\cc',
+    ---Block-comment toggle keymap
+    block = '\\bc',
+  },
+  ---LHS of operator-pending mappings in NORMAL and VISUAL mode
+  opleader = {
+    ---Line-comment keymap
+    line = '\\c',
+    ---Block-comment keymap
+    block = '\\b',
+  },
+  ---LHS of extra mappings
+  extra = {
+    ---Add comment on the line above
+    above = '\\cO',
+    ---Add comment on the line below
+    below = '\\co',
+    ---Add comment at the end of line
+    eol = '\\cA',
+  },
 }
 
 require('term-edit').setup {
-    -- Mandatory option:
-    -- Set this to a lua pattern that would match the end of your prompt.
-    -- Or a table of multiple lua patterns where at least one would match the
-    -- end of your prompt at any given time.
-    -- For most bash/zsh user this is '%$ '.
-    -- For most powershell/fish user this is '> '.
-    -- For most windows cmd user this is '>'.
-    prompt_end = '%$ ',
-    -- How to write lua patterns: https://www.lua.org/pil/20.2.html
+  -- Mandatory option:
+  -- Set this to a lua pattern that would match the end of your prompt.
+  -- Or a table of multiple lua patterns where at least one would match the
+  -- end of your prompt at any given time.
+  -- For most bash/zsh user this is '%$ '.
+  -- For most powershell/fish user this is '> '.
+  -- For most windows cmd user this is '>'.
+  prompt_end = '%$ ',
+  -- How to write lua patterns: https://www.lua.org/pil/20.2.html
 }
 
 require('aerial').setup({
@@ -300,12 +300,32 @@ require('bufferline').setup{
 }
 
 require('onedark').setup  {
-    style = 'dark', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+  style = 'dark', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
 
-    -- toggle theme style ---
-    toggle_style_key = "<leader>td", -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
-    toggle_style_list = {'dark', 'light'}, -- List of styles to toggle between
+  -- toggle theme style ---
+  toggle_style_key = "<leader>td", -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+  toggle_style_list = {'dark', 'light'}, -- List of styles to toggle between
 }
+
+require("conform").setup({
+  formatters = {
+    runic = {
+      command = "julia",
+      args = {"--project=@runic", "-e", "using Runic; exit(Runic.main(ARGS))"},
+    },
+  },
+  formatters_by_ft = {
+    julia = {"runic"},
+  },
+  default_format_opts = {
+    -- Increase the timeout in case Runic needs to precompile
+    -- (e.g. after upgrading Julia and/or Runic).
+    timeout_ms = 10000,
+  },
+})
+
+vim.api.nvim_set_keymap('v', '<leader>f', ":'<,'>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", {noremap=true})
+
 
 vim.api.nvim_set_keymap('n', '<C-n>', ':BufferLineCycleNext<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-a><C-n>', ':BufferLineMoveNext<CR>', {noremap = true})
