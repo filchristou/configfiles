@@ -8,7 +8,7 @@ ln -sf ~/configfiles/bashrc ~/.bashrc
 ln -sf ~/configfiles/wezterm.lua ~/.wezterm.lua
 ln -sf ~/configfiles/inputrc ~/.inputrc
 ln -sf ~/configfiles/tmux.conf ~/.tmux.conf
-ln -sf ~/configfiles/zshrc ~/.zshrc
+# ln -sf ~/configfiles/zshrc ~/.zshrc
 ln -sf ~/configfiles/nvim ~/.config/nvim
 ln -sf ~/configfiles/starship.toml ~/.config/starship.toml
 
@@ -18,6 +18,9 @@ if [[ ! `uname -n` == *"cnode"* ]] && [[ ! `uname -n` == "pc114" ]] ; then
 	echo "do nothing"
     # install riggrep
 fi
+
+# install Oh My Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # install juliaup
 curl -fsSL https://install.julialang.org | sh
@@ -35,15 +38,15 @@ ln -sf $CHAPPS/apps/wezterm/usr/bin/wezterm $CHAPPS/bin/
 
 # install nvim
 mkdir -p $CHAPPS/apps/nvim
-curl -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz | tar -xz -C $CHAPPS/apps/nvim/ --strip-components=1
+curl -L https://github.com/neovim/neovim/releases/download/v0.11.4/nvim-linux-x86_64.tar.gz | tar -xz -C $CHAPPS/apps/nvim/ --strip-components=1
 ln -sf $CHAPPS/apps/nvim/bin/nvim $CHAPPS/bin/
 
-# cargo-bins in ~/.cargo/bin
-curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-~/.cargo/bin/cargo-binstall ripgrep -y
-
-# install starship prompt
-curl -sS https://starship.rs/install.sh | sh -s -- -b $CHAPPS/bin
+# # cargo-bins in ~/.cargo/bin
+# curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+# ~/.cargo/bin/cargo-binstall ripgrep -y
+# 
+# # install starship prompt
+# curl -sS https://starship.rs/install.sh | sh -s -- -b $CHAPPS/bin
 
 # fzf
 mkdir -p $CHAPPS/apps/fzf
