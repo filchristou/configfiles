@@ -417,6 +417,8 @@ alias jupynote='python3 -c "from notebook.notebookapp import main; main()"'
 alias c="computation"
 alias tcpdump2x="tcpdump_2x_output"
 
+alias z='zellij'
+
 alias v='nvim'
 alias vr='nvim -M'
 alias vran='open_random_file_with_vim'
@@ -453,10 +455,12 @@ fi
 source ~/.bashrc_machine_specific.sh
 
 PATH=$PATH:~/Downloads/Apps/texlab/bin
+PATH=$PATH:~/Downloads/Apps/zellij
 PATH=$PATH:~/chapps/bin
 PATH=$PATH:~/.cargo/bin
 
 export BULK="/u/bulk/home/wima/fchrstou"
+export NEWIKR="/u/home/wima/fchrstou/IKRNEW/IKR/"
 
 # JULIA DEPOT on bulk if in cnodes
 if [[ `uname -n` == *"cnode"* ]]; then
@@ -470,6 +474,12 @@ if [[ ! `uname -n` == *"cnode"* ]] && [[ ! `uname -n` == "pc114" ]] ; then
 	PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
 	# install riggrep
 fi
+
+export ST_PATH=/u/home/wima/fchrstou/IKRNEW/IKR/Software/simtree_wrapper
+function st(){
+    source /u/home/wima/fchrstou/IKRNEW/IKR/Software/simtree_wrapper/st_wrapper.bash
+}
+
 
 # >>> juliaup initialize >>>
 
