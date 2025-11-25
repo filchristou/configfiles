@@ -61,3 +61,5 @@ vim.keymap.set('n', '<leader>hn', '<cmd>nohlsearch<CR>')
 
 -- config lazy script taken from online
 require("config.lazy")
+
+require("autocmds")
