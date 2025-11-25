@@ -456,8 +456,10 @@ source ~/.bashrc_machine_specific.sh
 
 PATH=$PATH:~/Downloads/Apps/texlab/bin
 PATH=$PATH:~/Downloads/Apps/zellij
+PATH=$PATH:~/Downloads/Apps/fd/
 PATH=$PATH:~/chapps/bin
 PATH=$PATH:~/.cargo/bin
+PATH=$PATH:~/.julia/bin
 
 export BULK="/u/bulk/home/wima/fchrstou"
 export NEWIKR="/u/home/wima/fchrstou/IKRNEW/IKR/"
