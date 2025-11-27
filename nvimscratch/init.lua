@@ -13,6 +13,7 @@ vim.g.maplocalleader = '\\'
 
 -- [[General options]]
 -- See `:help vim.o`
+vim.opt.shiftwidth = 4
 vim.opt.showmatch = true
 vim.opt.hlsearch = true
 vim.opt.splitright = true
@@ -49,6 +50,8 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- Window options --
 vim.wo.number = true
+-- Enable relative line numbers
+vim.wo.relativenumber = true
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
 
@@ -59,7 +62,15 @@ vim.g.sleuth_tex_defaults = 'tabstop=4'
 -- remove highligh
 vim.keymap.set('n', '<leader>hn', '<cmd>nohlsearch<CR>')
 
+-- Resize window with <C-arrows>
+vim.keymap.set('n', '<C-Up>', '<cmd>resize +2<CR>', { desc = 'Increase window height' })
+vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<CR>', { desc = 'Decrease window height' })
+vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize +2<CR>', { desc = 'Decrease window width' })
+vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize -2<CR>', { desc = 'Increase window width' })
+
 -- config lazy script taken from online
 require("config.lazy")
 
 require("autocmds")
+
+-- require("lspcopilot")
