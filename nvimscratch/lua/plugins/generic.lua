@@ -83,63 +83,87 @@ return {
     },
 
     {
-	'nvim-telescope/telescope.nvim',
-	dependencies = { 'nvim-lua/plenary.nvim'},
-	config = function()
-	    local actions = require('telescope.actions')
-	    require('telescope').setup({
-		defaults = {
-		    file_sorter = require('telescope.sorters').get_fuzzy_sorter,
-		    generic_sorter = require('telescope.sorters').get_fuzzy_sorter,
-		    mappings = {
-			i = {
-			    ["<C-j>"] = actions.cycle_history_next,
-			    ["<C-k>"] = actions.cycle_history_prev,
-			}
+    'nvim-telescope/telescope.nvim',
+    dependencies = {
+	'nvim-lua/plenary.nvim',
+	{ 
+	    "nvim-telescope/telescope-live-grep-args.nvim" ,
+	    version = "^1.0.0",
+	},
+    },
+    config = function()
+	telescope = require('telescope')
+	telescope.load_extension("live_grep_args")
+	local actions = require('telescope.actions')
+	local lga_actions = require("telescope-live-grep-args.actions")
+	telescope.setup({
+	    defaults = {
+		file_sorter = require('telescope.sorters').get_fuzzy_sorter,
+		generic_sorter = require('telescope.sorters').get_fuzzy_sorter,
+		mappings = {
+		    i = {
+			["<C-j>"] = actions.cycle_history_next,
+			["<C-k>"] = actions.cycle_history_prev,
 		    }
-		},
-		pickers = {
-		    live_grep = {
-			mappings = {
-			    i = { ["<c-f>"] = actions.to_fuzzy_refine },
+		}
+	    },
+	    pickers = {
+		live_grep = {
+		    mappings = {
+			i = { ["<c-f>"] = actions.to_fuzzy_refine },
 			},
-		    },
+	    },
 		},
+		extensions = {
+		    live_grep_args = {
+			auto_quoting = true, -- enable/disable auto-quoting
+			-- define mappings, e.g.
+			mappings = { -- extend mappings
+			    i = {
+				["<c-k>"] = lga_actions.quote_prompt(),
+				["<c-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+				-- freeze the current list and start a fuzzy search in the frozen list
+				["<c-f>"] = lga_actions.to_fuzzy_refine,
+			    },
+			    },
+		    }
+		}
 	    })
 	end,
 
 	keys = {
 	    { "<leader>sf", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
-	    { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "[S]earch [G]rep (Text)" },
+	    -- { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "[S]earch [G]rep (Text)" },
+	    { "<leader>sg", "<cmd>Telescope live_grep_args<cr>", desc = "[S]earch [G]rep (Text)" },
 	    { "<leader>sl", "<cmd>Telescope grep_string search=<cr>", desc = "[S]earch [G]rep (Text)" },
 	    { "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "[S]earch [D]iagnostics" },
 	},
-    },
+	},
 
-    {
-	'saghen/blink.cmp',
-	version = "1.*",
-	build = 'cargo +nightly build --release',
-	opts = {
-	    keymap = { preset = 'default' },
-	    sources = {
-		default = { 'lsp', 'buffer', 'path' },
+	{
+	    'saghen/blink.cmp',
+	    version = "1.*",
+	    build = 'cargo +nightly build --release',
+	    opts = {
+		keymap = { preset = 'default' },
+		sources = {
+		    default = { 'lsp', 'buffer', 'path' },
+		},
 	    },
 	},
-    },
 
-    {
-	"jake-stewart/multicursor.nvim",
-	branch = "1.0",
-	config = function()
-	    local mc = require("multicursor-nvim")
-	    mc.setup()
+	{
+	    "jake-stewart/multicursor.nvim",
+	    branch = "1.0",
+	    config = function()
+		local mc = require("multicursor-nvim")
+		mc.setup()
 
-	    local set = vim.keymap.set
+		local set = vim.keymap.set
 
-	    -- Add or skip cursor above/below the main cursor.
-	    set({"n", "x"}, "<up>", function() mc.lineAddCursor(-1) end)
-	    set({"n", "x"}, "<down>", function() mc.lineAddCursor(1) end)
+		-- Add or skip cursor above/below the main cursor.
+		set({"n", "x"}, "<up>", function() mc.lineAddCursor(-1) end)
+		set({"n", "x"}, "<down>", function() mc.lineAddCursor(1) end)
 	    set({"n", "x"}, "<leader><up>", function() mc.lineSkipCursor(-1) end)
 	    set({"n", "x"}, "<leader><down>", function() mc.lineSkipCursor(1) end)
 
@@ -217,14 +241,14 @@ return {
 		end,
 		expr = true,
 		desc = "Goto/Apply Next Edit Suggestion",
-	    },
-	    {
-		"<leader>lt",
-		function() require("sidekick.cli").toggle() end,
-		desc = "Sidekick Toggle CLI",
-	    },
-	    {
-		"<leader>lc",
+	},
+	{
+	    "<leader>lt",
+	    function() require("sidekick.cli").toggle() end,
+	    desc = "Sidekick Toggle CLI",
+	},
+	{
+	    "<leader>lc",
 		function() require("sidekick.cli").select() end,
 		-- Or to select only installed tools:
 		-- require("sidekick.cli").select({ filter = { installed = true } })
@@ -257,8 +281,8 @@ return {
 		function() require("sidekick.cli").prompt() end,
 		mode = { "n", "x" },
 		desc = "Sidekick Select Prompt",
-	    },
-	},
+    },
+    },
     }
 
-}
+    }
